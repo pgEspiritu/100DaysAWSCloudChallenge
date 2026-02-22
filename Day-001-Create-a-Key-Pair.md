@@ -106,6 +106,11 @@ us-east-1 (N. Virginia)
    - **Type:** RSA  
    - **Status:** Available  
 
+or using CLI in the KodeCloud Terminal:
+```bash
+aws ec2 describe-key-pairs --region us-east-1
+```
+
 ---
 
 ## ✅ Final Validation Checklist
