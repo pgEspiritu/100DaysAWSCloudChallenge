@@ -35,73 +35,82 @@ showcreds
 
 ---
 
-## 🛠️ Step-by-Step Solution (AWS CLI)
-Step 1: Access the AWS Client Host
+## 🌍 Step 1: Log in to AWS Console
 
-Log in to the aws-client machine provided in the lab environment.
-
----
-
-## Step 2: Verify AWS CLI Configuration
-
-Ensure the AWS CLI is authenticated and set to the correct region:
-
-```bash
-aws configure
-```
-
-Enter the credentials obtained from showcreds, and set:
-
-```bash
-Default region name: us-east-1
-Default output format: json
-```
+1. Open the **Console URL** provided above
+2. Enter the **username** and **password**
+3. Successfully sign in to the AWS Management Console
 
 ---
 
-## Step 3: Create the RSA Key Pair
+## 🌐 Step 2: Verify the AWS Region
 
-Run the following command to create the key pair:
+1. Look at the **top-right corner** of the console
+2. Ensure the selected region is:
 
-```bash
-aws ec2 create-key-pair \
-  --key-name xfusion-kp \
-  --key-type rsa \
-  --query 'KeyMaterial' \
-  --output text > xfusion-kp.pem
+```text
+N. Virginia (us-east-1)
 ```
 
-✅ This command:
-- Creates an RSA key pair
-- Saves the private key locally as xfusion-kp.pem
+> ⚠️ If not, switch to **us-east-1**, as required.
 
 ---
 
-## Step 4: Secure the Private Key
-
-Restrict file permissions (required for SSH access):
-
-```bash
-chmod 400 xfusion-kp.pem
-```
+### Step 3️⃣: Navigate to EC2 Service
+1. From the AWS Console homepage, search for **EC2**.
+2. Click **EC2** to open the EC2 Dashboard.
 
 ---
 
-## Step 5: Verify Key Pair Creation
-
-Confirm that the key pair exists in AWS:
-
-```bash
-aws ec2 describe-key-pairs --key-names xfusion-kp
-```
-Expected result: details of the xfusion-kp key pair.
+### Step 4️⃣: Open Key Pairs Section
+1. In the EC2 left-hand navigation pane, scroll down to **Network & Security**.
+2. Click on **Key Pairs**.
 
 ---
 
-## ✅ Final Outcome
-- ✔ Key pair xfusion-kp created successfully
-- ✔ Key type: RSA
-- ✔ Region: us-east-1
-- ✔ Private key stored securely
+### Step 5️⃣: Create a New Key Pair
+1. Click the **Create key pair** button.
+2. Fill in the following details:
 
-This key pair can now be used for secure SSH access to EC2 instances as part of the Nautilus team’s phased AWS migration strategy.
+| Field | Value |
+|-----|------|
+| **Name** | `xfusion-kp` |
+| **Key pair type** | `RSA` |
+| **Private key file format** | `.pem` (default) |
+
+---
+
+### Step 6️⃣: Create and Download Key
+1. Click **Create key pair**.
+2. The private key file (`xfusion-kp.pem`) will be downloaded automatically.
+3. Store the file in a **secure location**.
+
+> ⚠️ **Important:** AWS does **not** allow re-downloading private keys.
+
+---
+
+### Step 7️⃣: Verify Key Pair Creation
+1. Confirm that `xfusion-kp` appears in the **Key Pairs** list.
+2. Ensure:
+   - Status: **Available**
+   - Type: **RSA**
+
+---
+
+## ✅ Final Validation Checklist
+
+- [x] Key pair name is `xfusion-kp`  
+- [x] Key pair type is **RSA**  
+- [x] Created in **us-east-1** region  
+- [x] Private key downloaded successfully  
+
+---
+
+## 🎉 Task Completed Successfully!
+
+The EC2 key pair required for the incremental AWS migration has been created successfully using the **AWS Management Console**.  
+This key pair can now be used for secure access to EC2 instances during future migration phases.
+
+---
+
+
