@@ -123,7 +123,10 @@ us-east-1 (N. Virginia)
    - VPC: Default VPC  
    - Inbound rules: HTTP (80) and SSH (22)  
    - Source: `0.0.0.0/0`
-
+3. Or by using KodeKloud CLI:
+```bash
+aws ec2 describe-security-groups --group-names datacenter-sg
+```
 ---
 
 ## ✅ Final Validation Checklist
