@@ -50,6 +50,8 @@ Create **one subnet** with the following requirements:
 2. Log in using the given **username** and **password**.
 3. Confirm successful login.
 
+![Day 1 - Create a Subnet.1](images/Day-003.1.png)
+
 ---
 
 ### Step 2️⃣: Verify the AWS Region
@@ -58,6 +60,8 @@ Create **one subnet** with the following requirements:
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 1 - Create a Subnet.2](images/Day-003.2.png)
 
 > ⚠️ Switch to **us-east-1** if another region is selected.
 
@@ -71,7 +75,12 @@ us-east-1 (N. Virginia)
 
 ### Step 4️⃣: Navigate to Subnets
 1. In the left-hand navigation pane, click **Subnets**.
+
+![Day 1 - Create a Subnet.3](images/Day-003.3.png)
+
 2. Click the **Create subnet** button.
+
+![Day 1 - Create a Subnet.4](images/Day-003.4.png)
 
 ---
 
@@ -87,6 +96,9 @@ Fill in the following information:
 
 > 💡 The CIDR block must fall within the default VPC CIDR range.
 
+![Day 1 - Create a Subnet.5](images/Day-003.5.png)
+![Day 1 - Create a Subnet.6](images/Day-003.6.png)
+
 ---
 
 ### Step 6️⃣: Create the Subnet
@@ -101,11 +113,16 @@ Fill in the following information:
    - VPC: Default VPC  
    - State: Available  
    - Region: `us-east-1`
+
+![Day 1 - Create a Subnet.7](images/Day-003.7.png)
+
 3. Or verify using CLI
 ```bash
 aws ec2 describe-subnets
 ```
 > check subnet with the name: `devops-subnet`
+
+![Day 1 - Create a Subnet.8](images/Day-003.8.png)
 
 ---
 
