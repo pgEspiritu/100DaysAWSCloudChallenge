@@ -101,6 +101,11 @@ Fill in the following information:
    - VPC: Default VPC  
    - State: Available  
    - Region: `us-east-1`
+3. Or verify using CLI
+```bash
+aws ec2 describe-subnets
+```
+> check subnet with the name: `devops-subnet`
 
 ---
 
