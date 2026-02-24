@@ -52,6 +52,8 @@ Create a **Security Group** under the **default VPC** with the following specifi
 2. Log in using the given **username** and **password**.
 3. Ensure login is successful.
 
+![Day 2 - Create Security Group.1](images/Day-002.1.png)
+
 ---
 
 ### Step 2️⃣: Confirm the AWS Region
@@ -60,6 +62,8 @@ Create a **Security Group** under the **default VPC** with the following specifi
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 2 - Create Security Group.2](images/Day-002.2.png)
 
 > ⚠️ Switch to **us-east-1** if a different region is selected.
 
@@ -75,10 +79,15 @@ us-east-1 (N. Virginia)
 1. In the left-hand navigation pane, scroll to **Network & Security**.
 2. Click **Security Groups**.
 
+![Day 2 - Create Security Group.3](images/Day-002.3.png)
+
 ---
 
 ### Step 5️⃣: Create the Security Group
 1. Click **Create security group**.
+
+![Day 2 - Create Security Group.4](images/Day-002.4.png)
+
 2. Fill in the following details:
 
 | Field | Value |
@@ -86,6 +95,8 @@ us-east-1 (N. Virginia)
 | **Security group name** | `datacenter-sg` |
 | **Description** | `Security group for Nautilus App Servers` |
 | **VPC** | Default VPC |
+
+![Day 2 - Create Security Group.5](images/Day-002.5.png)
 
 ---
 
@@ -109,11 +120,15 @@ us-east-1 (N. Virginia)
 
 > Leave **Outbound rules** as default (Allow all traffic).
 
+![Day 2 - Create Security Group.6](images/Day-002.6.png)
+
 ---
 
 ### Step 7️⃣: Create the Security Group
 1. Review all configurations.
 2. Click **Create security group**.
+
+![Day 2 - Create Security Group.7](images/Day-002.7.png)
 
 ---
 
@@ -123,10 +138,17 @@ us-east-1 (N. Virginia)
    - VPC: Default VPC  
    - Inbound rules: HTTP (80) and SSH (22)  
    - Source: `0.0.0.0/0`
+
+![Day 2 - Create Security Group.8](images/Day-002.8.png)
+
 3. Or by using KodeKloud CLI:
 ```bash
 aws ec2 describe-security-groups --group-names datacenter-sg
 ```
+
+![Day 2 - Create Security Group.9](images/Day-002.9.png)
+![Day 2 - Create Security Group.10](images/Day-002.10.png)
+
 ---
 
 ## ✅ Final Validation Checklist
