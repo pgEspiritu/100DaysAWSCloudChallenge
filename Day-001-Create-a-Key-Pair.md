@@ -54,6 +54,8 @@ Create an **EC2 Key Pair** with the following requirements:
 2. Enter the **username** and **password**.
 3. Sign in successfully.
 
+![Day 1 - Create a Key Pair.1](images/Day-001.1.png)
+
 ---
 
 ### Step 2️⃣: Confirm the AWS Region
@@ -62,6 +64,8 @@ Create an **EC2 Key Pair** with the following requirements:
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 1 - Create a Key Pair.2](images/Day-001.2.png)
 
 > ⚠️ If the region is different, switch to **us-east-1** before proceeding.
 
@@ -77,10 +81,15 @@ us-east-1 (N. Virginia)
 1. In the left navigation pane, scroll to **Network & Security**.
 2. Click **Key Pairs**.
 
+![Day 1 - Create a Key Pair.3](images/Day-001.3.png)
+
 ---
 
 ### Step 5️⃣: Create the Key Pair
 1. Click **Create key pair**.
+
+![Day 1 - Create a Key Pair.4](images/Day-001.4.png)
+
 2. Enter the following details:
 
 | Field | Value |
@@ -88,6 +97,8 @@ us-east-1 (N. Virginia)
 | **Name** | `nautilus-kp` |
 | **Key pair type** | `RSA` |
 | **Private key format** | `.pem` (default) |
+
+![Day 1 - Create a Key Pair.5](images/Day-001.5.png)
 
 ---
 
@@ -106,10 +117,14 @@ us-east-1 (N. Virginia)
    - **Type:** RSA  
    - **Status:** Available  
 
+![Day 1 - Create a Key Pair.6](images/Day-001.6.png)
+
 or using CLI in the KodeCloud Terminal:
 ```bash
 aws ec2 describe-key-pairs --region us-east-1
 ```
+
+![Day 1 - Create a Key Pair.7](images/Day-001.7.png)
 
 ---
 
