@@ -97,6 +97,10 @@ devops-s3-6378
 ```text
 Status: Enabled
 ```
+3. Or check via CLI
+```bash
+aws s3api get-bucket-versioning --bucket devops-s3-6378
+```
 
 ---
 
