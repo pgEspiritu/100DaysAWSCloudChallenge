@@ -118,9 +118,11 @@ Fill in the following:
 
 3. Or Verify using CLI
 ```bash
-aws ec2 describe-volume-types \
+aws ec2 describe-volumes \
     --region us-east-1 \
-    --volume-types gp3
+    --filters Name=volume-type,Values=gp3 \
+    --query "Volumes[*].[Name,VolumeId,Size,State,AvailabilityZone]" \
+    --output table
 ```
 
 ---
