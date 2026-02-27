@@ -116,6 +116,13 @@ Fill in the following:
    - **State:** Available  
    - **Tag Name:** datacenter-volume  
 
+3. Or Verify using CLI
+```bash
+aws ec2 describe-volume-types \
+    --region us-east-1 \
+    --volume-types gp3
+```
+
 ---
 
 ## ✅ Final Validation Checklist
