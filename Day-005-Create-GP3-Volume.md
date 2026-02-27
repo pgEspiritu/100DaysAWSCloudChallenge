@@ -121,7 +121,7 @@ Fill in the following:
 aws ec2 describe-volumes \
     --region us-east-1 \
     --filters Name=volume-type,Values=gp3 \
-    --query "Volumes[*].[Name,VolumeId,Size,State,AvailabilityZone]" \
+    --query "Volumes[*].[Tags[?Key=='Name']|[0].Value,VolumeId,Size,State,AvailabilityZone]" \
     --output table
 ```
 
