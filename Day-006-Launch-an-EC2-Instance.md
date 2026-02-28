@@ -48,6 +48,8 @@ Create an EC2 instance with the following specifications:
 2. Enter the given username and password.
 3. Confirm successful login.
 
+![Day 6 - Launch an EC2 Instance.1](images/Day-006.1.png)
+
 ---
 
 ## Step 2️⃣: Verify AWS Region
@@ -56,6 +58,8 @@ Ensure the region (top-right corner) is:
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 6 - Launch an EC2 Instance.2](images/Day-006.2.png)
 
 > ⚠️ Switch to **us-east-1** if needed.
 
@@ -66,6 +70,8 @@ us-east-1 (N. Virginia)
 1. From the AWS Console homepage, search for **EC2**.
 2. Open the EC2 Dashboard.
 3. Click **Launch instance**.
+
+![Day 6 - Launch an EC2 Instance.3](images/Day-006.3.png)
 
 ---
 
@@ -83,6 +89,8 @@ us-east-1 (N. Virginia)
 
 > Typically labeled as **Amazon Linux 2 AMI** or **Amazon Linux 2023**.
 
+![Day 6 - Launch an EC2 Instance.4](images/Day-006.4.png)
+
 ---
 
 ## Step 6️⃣: Choose Instance Type
@@ -94,6 +102,8 @@ t2.micro
 
 > ✔️ Eligible for Free Tier (if applicable)
 
+![Day 6 - Launch an EC2 Instance.5](images/Day-006.5.png)
+
 ---
 
 ## Step 7️⃣: Create New RSA Key Pair
@@ -101,6 +111,9 @@ t2.micro
 Under **Key pair (login)**:
 
 1. Click **Create new key pair**
+
+![Day 6 - Launch an EC2 Instance.6](images/Day-006.6.png)
+
 2. Enter:
    - **Key pair name:** `devops-kp`
    - **Key pair type:** `RSA`
@@ -110,6 +123,9 @@ Under **Key pair (login)**:
 
 > ⚠️ AWS does NOT allow re-downloading private keys.
 
+![Day 6 - Launch an EC2 Instance.7](images/Day-006.7.png)
+![Day 6 - Launch an EC2 Instance.8](images/Day-006.8.png)
+
 ---
 
 ## Step 8️⃣: Configure Network Settings
@@ -118,12 +134,16 @@ Under **Key pair (login)**:
 2. Select the **default security group** (already available by default).
 3. Do not create a new security group.
 
+![Day 6 - Launch an EC2 Instance.9](images/Day-006.9.png)
+
 ---
 
 ## Step 9️⃣: Review and Launch
 
 1. Review all configuration settings.
 2. Click **Launch instance**.
+
+![Day 6 - Launch an EC2 Instance.10](images/Day-006.10.png)
 
 ---
 
@@ -141,6 +161,8 @@ Under **Key pair (login)**:
 | Security Group | default |
 | State | Running |
 
+![Day 6 - Launch an EC2 Instance.11](images/Day-006.11.png)
+
 3. or check via CLI:
 ```bash
 aws ec2 describe-instances \
@@ -156,6 +178,8 @@ aws ec2 describe-instances \
   }" \
   --output table
 ```
+
+![Day 6 - Launch an EC2 Instance.12](images/Day-006.12.png)
 
 ---
 
