@@ -51,6 +51,8 @@ Create an **EBS Volume** with the following specifications:
 2. Log in using the supplied **username** and **password**.
 3. Confirm successful login.
 
+![Day 5 - Create GP3 Volume.1](images/Day-005.1.png)
+
 ---
 
 ### Step 2️⃣: Verify Region
@@ -59,6 +61,8 @@ Create an **EBS Volume** with the following specifications:
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 5 - Create GP3 Volume.2](images/Day-005.2.png)
 
 > ⚠️ If not, switch to **us-east-1**.
 
@@ -73,7 +77,12 @@ us-east-1 (N. Virginia)
 ### Step 4️⃣: Open Volumes Section
 1. In the left-hand navigation pane, scroll to **Elastic Block Store**.
 2. Click **Volumes**.
+
+![Day 5 - Create GP3 Volume.3](images/Day-005.3.png)
+
 3. Click **Create volume**.
+
+![Day 5 - Create GP3 Volume.4](images/Day-005.4.png)
 
 ---
 
@@ -88,6 +97,8 @@ Fill in the following:
 | **Availability Zone** | Any in `us-east-1` (e.g., `us-east-1a`) |
 
 > ⚠️ The Availability Zone must match where the volume will eventually be attached (if needed).
+
+![Day 5 - Create GP3 Volume.5](images/Day-005.5.png)
 
 ---
 
@@ -106,6 +117,8 @@ Fill in the following:
 1. Review all configurations.
 2. Click **Create volume**.
 
+![Day 5 - Create GP3 Volume.6](images/Day-005.6.png)
+
 ---
 
 ### Step 8️⃣: Verify Volume Creation
@@ -116,6 +129,8 @@ Fill in the following:
    - **State:** Available  
    - **Tag Name:** datacenter-volume  
 
+![Day 5 - Create GP3 Volume.7](images/Day-005.7.png)
+
 3. Or Verify using CLI
 ```bash
 aws ec2 describe-volumes \
@@ -124,6 +139,8 @@ aws ec2 describe-volumes \
     --query "Volumes[*].[Tags[?Key=='Name']|[0].Value,VolumeId,Size,State,AvailabilityZone]" \
     --output table
 ```
+
+![Day 5 - Create GP3 Volume.8](images/Day-005.8.png)
 
 ---
 
