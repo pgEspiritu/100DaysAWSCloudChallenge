@@ -141,6 +141,22 @@ Under **Key pair (login)**:
 | Security Group | default |
 | State | Running |
 
+3. or check via CLI:
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=devops-ec2" \
+  --query "Reservations[*].Instances[*].{
+    Name: Tags[?Key=='Name']|[0].Value,
+    InstanceType: InstanceType,
+    AMI: ImageId,
+    KeyPair: KeyName,
+    SecurityGroup: SecurityGroups[0].GroupName,
+    State: State.Name
+  }" \
+  --output table
+```
+
 ---
 
 # ✅ Final Validation Checklist
