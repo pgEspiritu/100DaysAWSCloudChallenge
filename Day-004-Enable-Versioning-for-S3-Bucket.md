@@ -51,6 +51,8 @@ Enable **versioning** for the following S3 bucket:
 2. Log in using the given **username** and **password**.
 3. Confirm successful login.
 
+![Day 4 - Enable Versioning for S3 Bucket.1](images/Day-004.1.png)
+
 ---
 
 ### Step 2️⃣: Verify AWS Region
@@ -59,6 +61,8 @@ Enable **versioning** for the following S3 bucket:
 ```text
 us-east-1 (N. Virginia)
 ```
+
+![Day 4 - Enable Versioning for S3 Bucket.2](images/Day-004.2.png)
 
 > ⚠️ Switch to **us-east-1** if a different region is selected.
 
@@ -76,11 +80,15 @@ us-east-1 (N. Virginia)
 devops-s3-6378
 ```
 
+![Day 4 - Enable Versioning for S3 Bucket.3](images/Day-004.3.png)
+
 ---
 
 ### Step 5️⃣: Open Bucket Properties
 1. Inside the bucket, click the **Properties** tab.
 2. Scroll down to the **Bucket Versioning** section.
+
+![Day 4 - Enable Versioning for S3 Bucket.4](images/Day-004.4.png)
 
 ---
 
@@ -88,6 +96,8 @@ devops-s3-6378
 1. Click **Edit** under **Bucket Versioning**.
 2. Select **Enable**.
 3. Click **Save changes**.
+
+![Day 4 - Enable Versioning for S3 Bucket.5](images/Day-004.5.png)
 
 ---
 
@@ -97,10 +107,15 @@ devops-s3-6378
 ```text
 Status: Enabled
 ```
+
+![Day 4 - Enable Versioning for S3 Bucket.6](images/Day-004.6.png)
+
 3. Or check via CLI
 ```bash
 aws s3api get-bucket-versioning --bucket devops-s3-6378
 ```
+
+![Day 4 - Enable Versioning for S3 Bucket.7](images/Day-004.7.png)
 
 ---
 
