@@ -44,12 +44,6 @@ t2.micro → t2.nano
 
 # 🛠️ Solution — Using AWS Management Console (Preferred)
 
-
-::contentReference[oaicite:0]{index=0}
-
-
----
-
 ## Step 1️⃣: Log in to AWS Console
 
 1. Open the provided Console URL.
