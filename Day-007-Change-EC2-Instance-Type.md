@@ -7,7 +7,7 @@
 
 During the AWS migration process, the **Nautilus DevOps Team** identified an underutilized EC2 instance and decided to optimize costs by downsizing it.
 
-The instance `nautilus-ec2` must be resized from:
+The instance `datacenter-ec2` must be resized from:
 ```text
 t2.micro → t2.nano
 ```
@@ -21,7 +21,7 @@ t2.micro → t2.nano
 
 | Requirement | Value |
 |------------|------|
-| **Instance Name** | `nautilus-ec2` |
+| **Instance Name** | `datacenter-ec2` |
 | **Current Type** | `t2.micro` |
 | **New Type** | `t2.nano` |
 | **Final State** | Running |
@@ -34,9 +34,9 @@ t2.micro → t2.nano
 
 | Field | Value |
 |------|------|
-| **Console URL** | https://472012609282.signin.aws.amazon.com/console?region=us-east-1 |
-| **Username** | `kk_labs_user_202919` |
-| **Password** | `RsxZ!7!X1pkt` |
+| **Console URL** | https://678838728594.signin.aws.amazon.com/console?region=us-east-1 |
+| **Username** | `kk_labs_user_194324` |
+| **Password** | `c%HYR@BrwO9F` |
 | **Start Time** | Sun Mar 01 00:41:05 UTC 2026 |
 | **End Time** | Sun Mar 01 01:41:05 UTC 2026 |
 
@@ -74,7 +74,7 @@ us-east-1 (N. Virginia)
 
 1. Find instance named:
 ```text
-nautilus-ec2
+datacenter-ec2
 ```
 
 
@@ -126,6 +126,14 @@ t2.nano
 ```text
 Running
 ```
+3. Or check via CLI
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=datacenter-ec2" \
+  --query "Reservations[*].Instances[*].[InstanceId,InstanceType]" \
+  --output table
+```
 
 ---
 
@@ -135,7 +143,7 @@ Confirm the following:
 
 | Setting | Expected Value |
 |----------|----------------|
-| Name | `nautilus-ec2` |
+| Name | `datacenter-ec2` |
 | Instance Type | `t2.nano` |
 | Instance State | Running |
 | Status Checks | 2/2 Passed |
