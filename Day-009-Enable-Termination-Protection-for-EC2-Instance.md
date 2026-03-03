@@ -101,6 +101,52 @@ Actions → Instance settings → Change termination protection
 Termination protection: Enabled
 ```
 
+4. or verify via CLI
+
+first: Get Instance ID from EC2 Name
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=xfusion-ec2" \
+  --query "Reservations[*].Instances[*].InstanceId" \
+  --output text
+```
+
+> output: **i-0a3a4af01d15e0db0**
+
+second: Check Termination Protection (use the instance id from above)
+```bash
+aws ec2 describe-instance-attribute \
+  --region us-east-1 \
+  --instance-id i-0a3a4af01d15e0db0 \
+  --attribute disableApiTermination
+```
+
+output:
+```bash
+{
+    "DisableApiTermination": {
+        "Value": true
+    },
+    "InstanceId": "i-0a3a4af01d15e0db0"
+}
+```
+> True -> means that the Termination Protection is Enabled
+
+One Command:
+
+```bash
+aws ec2 describe-instance-attribute \
+  --region us-east-1 \
+  --instance-id $(aws ec2 describe-instances \
+      --region us-east-1 \
+      --filters "Name=tag:Name,Values=xfusion-ec2" \
+      --query "Reservations[0].Instances[0].InstanceId" \
+      --output text) \
+  --attribute disableApiTermination \
+  --query "DisableApiTermination.Value"
+```
+> Same output.
 ---
 
 ## ✅ Final Validation Checklist
