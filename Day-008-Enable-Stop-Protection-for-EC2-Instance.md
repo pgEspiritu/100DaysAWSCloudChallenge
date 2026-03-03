@@ -65,6 +65,8 @@ us-east-1 (N. Virginia)
 2. Open the EC2 Dashboard.
 3. Click **Instances** from the left navigation pane.
 
+![Day 8 - Enable Stop Protection for EC2 Instance.1](images/Day-008.1.png)
+
 ---
 
 ## Step 4️⃣: Locate the Instance
@@ -76,6 +78,8 @@ xfusion-ec2
 
 Select the checkbox beside the instance.
 
+![Day 8 - Enable Stop Protection for EC2 Instance.2](images/Day-008.2.png)
+
 ---
 
 ## Step 5️⃣: Enable Stop Protection
@@ -85,10 +89,13 @@ Select the checkbox beside the instance.
 ```text
 Actions → Instance settings → Change stop protection
 ```
+![Day 8 - Enable Stop Protection for EC2 Instance.3](images/Day-008.3.png)
 
 3. In the dialog box:
    - ✅ Enable **Stop protection**
 4. Click **Save** or **Apply**.
+
+![Day 8 - Enable Stop Protection for EC2 Instance.4](images/Day-008.4.png)
 
 ---
 
@@ -100,6 +107,8 @@ Actions → Instance settings → Change stop protection
 ```text
 Stop protection: Enabled
 ```
+
+![Day 8 - Enable Stop Protection for EC2 Instance.5](images/Day-008.5.png)
 
 ---
 
