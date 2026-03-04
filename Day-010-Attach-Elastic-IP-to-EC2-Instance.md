@@ -99,6 +99,43 @@ xfusion-ec2
 xfusion-ec2-eip
 ```
 
+4. or verify via CLI
+
+First: Check Instance ID
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=xfusion-ec2" \
+  --query "Reservations[0].Instances[0].InstanceId" \
+  --output text
+```
+
+**Output:**
+```text
+i-0ae2e350232d92653
+```
+
+Second: Check the EIP and its Association
+```bash
+aws ec2 describe-addresses \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=xfusion-ec2-eip" \
+  --query "Addresses[*].[PublicIp,InstanceId,AssociationId]" \
+  --output table
+```
+
+**Output:**
+------------------------------------------------------------------------
+|                           DescribeAddresses                          |
++---------------+-----------------------+------------------------------+
+|  44.213.240.96|  i-0ae2e350232d92653  |  eipassoc-00b2a3c04d55d18f3  |
++---------------+-----------------------+------------------------------+
+
+Remarks:
+- InstanceId (i-0ae2e350232d92653) = EC2 that the EIP is associated with.
+- AssociationId exists (eipassoc-00b2a3c04d55d18f3) → EIP is attached.
+- If InstanceId is null → EIP is not associated.
+
 ---
 
 ## ✅ Final Validation Checklist
