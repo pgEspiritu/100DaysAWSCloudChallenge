@@ -94,6 +94,7 @@ Attach
 
 | Setting | Value |
 |--------|-------|
+| VPC | `Default VPC` |
 | Instance | `nautilus-ec2` |
 | Device Index | `1` |
 
