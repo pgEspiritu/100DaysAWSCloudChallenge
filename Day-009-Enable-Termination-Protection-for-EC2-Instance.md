@@ -66,6 +66,8 @@ us-east-1 (N. Virginia)
 2. Open the EC2 service.
 3. Click **Instances** in the left navigation panel.
 
+![Day 9 - Enable Termination Protection for EC2 Instance.1](images/Day-009.1.png)
+
 ---
 
 ## Step 4️⃣: Locate the Instance
@@ -77,6 +79,8 @@ xfusion-ec2
 
 Select the checkbox beside the instance.
 
+![Day 9 - Enable Termination Protection for EC2 Instance.2](images/Day-009.2.png)
+
 ---
 
 ## Step 5️⃣: Enable Termination Protection
@@ -86,9 +90,13 @@ Select the checkbox beside the instance.
 Actions → Instance settings → Change termination protection
 ```
 
+![Day 9 - Enable Termination Protection for EC2 Instance.3](images/Day-009.3.png)
+
 2. In the dialog window:
    - ✅ Enable **Termination protection**
 3. Click **Save** or **Apply**.
+
+![Day 9 - Enable Termination Protection for EC2 Instance.4](images/Day-009.4.png)
 
 ---
 
@@ -100,6 +108,8 @@ Actions → Instance settings → Change termination protection
 ```text
 Termination protection: Enabled
 ```
+
+![Day 9 - Enable Termination Protection for EC2 Instance.5](images/Day-009.5.png)
 
 4. or verify via CLI
 
@@ -147,6 +157,9 @@ aws ec2 describe-instance-attribute \
   --query "DisableApiTermination.Value"
 ```
 > Same output.
+
+![Day 9 - Enable Termination Protection for EC2 Instance.6](images/Day-009.6.png)
+
 ---
 
 ## ✅ Final Validation Checklist
