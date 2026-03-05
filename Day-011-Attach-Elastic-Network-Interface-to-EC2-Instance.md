@@ -122,6 +122,41 @@ Expected values:
 | Attachment Status | `Attached` |
 | Instance ID | nautilus-ec2 instance |
 
+3. or Verify via CLI
+
+First: Get the Network Interface ID. Find the ENI using its Name tag.
+```bash
+aws ec2 describe-network-interfaces \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=nautilus-eni" \
+  --query "NetworkInterfaces[0].NetworkInterfaceId" \
+  --output text
+```
+
+> output: **eni-0d16d8360930b30f2**
+
+Second: Get the Attached Instance ID. Now check which EC2 instance the ENI is attached to.
+```bash
+aws ec2 describe-network-interfaces \
+  --region us-east-1 \
+  --network-interface-ids eni-0d16d8360930b30f2 \
+  --query "NetworkInterfaces[0].Attachment.InstanceId" \
+  --output text
+```
+
+> output: **i-09da57c1388a07358**
+
+Third: Get the EC2 Name Tag. Use the Instance ID to retrieve the EC2 name.
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --instance-ids i-09da57c1388a07358 \
+  --query "Reservations[0].Instances[0].Tags[?Key=='Name']|[0].Value" \
+  --output text
+```
+
+> output: **nautilus-ec2**
+
 ---
 
 ## ✔️ Validation Checklist
