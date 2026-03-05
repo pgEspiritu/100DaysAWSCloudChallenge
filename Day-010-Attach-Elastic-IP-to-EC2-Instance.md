@@ -69,10 +69,15 @@ us-east-1 (N. Virginia)
 
 1. Search for **EC2** and open the EC2 Dashboard.
 2. In the left-hand menu, scroll to **Network & Security → Elastic IPs**.
+
+![Day 10 - Attach Elastic IP to EC2 Instance.1](images/Day-010.1.png)
+
 3. Locate the Elastic IP:
 ```text
 xfusion-ec2-eip
 ```
+
+![Day 10 - Attach Elastic IP to EC2 Instance.2](images/Day-010.2.png)
 
 ---
 
@@ -80,6 +85,9 @@ xfusion-ec2-eip
 
 1. Select `xfusion-ec2-eip`.
 2. Click **Actions → Associate Elastic IP address**.
+
+![Day 10 - Attach Elastic IP to EC2 Instance.3](images/Day-010.3.png)
+
 3. In the **Instance** dropdown, select:
 ```text
 xfusion-ec2
@@ -87,6 +95,8 @@ xfusion-ec2
 
 4. Select the correct **private IP** (if prompted, typically the primary IP).
 5. Click **Associate**.
+
+![Day 10 - Attach Elastic IP to EC2 Instance.4](images/Day-010.4.png)
 
 ---
 
@@ -98,6 +108,8 @@ xfusion-ec2
 ```text
 xfusion-ec2-eip
 ```
+
+![Day 10 - Attach Elastic IP to EC2 Instance.5](images/Day-010.5.png)
 
 4. or verify via CLI
 
@@ -133,6 +145,8 @@ Remarks:
 - InstanceId (i-0ae2e350232d92653) = EC2 that the EIP is associated with.
 - AssociationId exists (eipassoc-00b2a3c04d55d18f3) → EIP is attached.
 - If InstanceId is null → EIP is not associated.
+
+![Day 10 - Attach Elastic IP to EC2 Instance.6](images/Day-010.6.png)
 
 ---
 
