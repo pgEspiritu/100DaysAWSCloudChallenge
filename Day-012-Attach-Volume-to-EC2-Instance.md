@@ -123,6 +123,54 @@ Expected results:
 | Instance | `nautilus-ec2` |
 | Device | `/dev/sdb` |
 
+3. or verify using CLI
+
+First: Get the Volume ID from the Volume Name
+Volumes use tags for their names.
+```bash
+aws ec2 describe-volumes \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=nautilus-volume" \
+  --query "Volumes[0].VolumeId" \
+  --output text
+```
+
+> Output: **vol-05b72f425586b2d64**
+> Tags for nautilus-volume
+
+Second: Check Which Instance the Volume Is Attached To
+```bash
+aws ec2 describe-volumes \
+  --region us-east-1 \
+  --volume-ids vol-05b72f425586b2d64 \
+  --query "Volumes[0].Attachments[0].InstanceId" \
+  --output text
+```
+
+> Output: **i-07e7728f975cf02f3**
+
+Third: Get the EC2 Name
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --instance-ids i-07e7728f975cf02f3 \
+  --query "Reservations[0].Instances[0].Tags[?Key=='Name']|[0].Value" \
+  --output text
+```
+
+> output: nautilus-ec2
+
+Fourth: Check the Device Name of the Attachment
+```bash
+aws ec2 describe-volumes \
+  --region us-east-1 \
+  --volume-ids vol-05b72f425586b2d64 \
+  --query "Volumes[0].Attachments[0].Device" \
+  --output text
+```
+
+> output: /dev/sdb
+
 ---
 
 # ✔️ Validation Checklist
