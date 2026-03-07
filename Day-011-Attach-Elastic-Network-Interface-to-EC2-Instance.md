@@ -47,6 +47,8 @@ us-east-1 (N. Virginia)
 EC2 Dashboard → Instances
 ```
 
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.1](images/Day-011.1.png)
+
 2. Locate instance:
 ```text
 nautilus-ec2
@@ -61,6 +63,8 @@ nautilus-ec2
 
 ⚠️ If status shows **Initializing**, wait until checks complete.
 
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.2](images/Day-011.2.png)
+
 ---
 
 ## 🌐 Step 3 — Locate Network Interface
@@ -69,6 +73,8 @@ nautilus-ec2
 ```text
 Network & Security → Network Interfaces
 ```
+
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.3](images/Day-011.3.png)
 
 2. Search for:
 ```text
@@ -80,6 +86,8 @@ nautilus-eni
 Available
 ```
 
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.4](images/Day-011.4.png)
+
 ---
 
 ## 🔗 Step 4 — Attach Network Interface
@@ -90,6 +98,9 @@ Available
 ```text
 Attach
 ```
+
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.5](images/Day-011.5.png)
+
 4. Configure attachment:
 
 | Setting | Value |
@@ -104,6 +115,8 @@ Attach
 ```text
 Attach network interface
 ```
+
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.6](images/Day-011.6.png)
 
 ---
 
@@ -121,6 +134,8 @@ Expected values:
 | Status | `In-use` |
 | Attachment Status | `Attached` |
 | Instance ID | nautilus-ec2 instance |
+
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.7](images/Day-011.7.png)
 
 3. or Verify via CLI
 
@@ -156,6 +171,8 @@ aws ec2 describe-instances \
 ```
 
 > output: **nautilus-ec2**
+
+![Day 11 - Attach Elastic Network Interface to EC2 Instance.8](images/Day-011.8.png)
 
 ---
 
