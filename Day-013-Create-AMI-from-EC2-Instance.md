@@ -97,6 +97,42 @@ xfusion-ec2-ami
 Pending → Available
 ```
 
+4. or verify via CLI
+
+first: Get the AMI ID from the AMI Name
+```bash
+aws ec2 describe-images \
+  --region us-east-1 \
+  --owners self \
+  --filters "Name=name,Values=xfusion-ec2-ami" \
+  --query "Images[0].ImageId" \
+  --output text
+```
+
+> Output: **ami-06ac6b1a7bf29030c**
+
+Second: Check the Source Instance ID
+```bash
+aws ec2 describe-images \
+  --region us-east-1 \
+  --image-ids ami-06ac6b1a7bf29030c \
+  --query "Images[0].SourceInstanceId" \
+  --output text
+```
+
+> Output: **i-00c3ce47713fc39b5**
+
+
+Third: Get the Instance Name (To double check the instance name)
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --instance-ids i-00c3ce47713fc39b5\
+  --query "Reservations[0].Instances[0].Tags[?Key=='Name']|[0].Value" \
+  --output text
+```
+> Output: **xfusion-ec2**
+
 ---
 
 ## ✅ Verification Checklist
