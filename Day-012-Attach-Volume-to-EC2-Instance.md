@@ -49,6 +49,8 @@ Region selector is located at the **top-right corner** of the console.
 EC2 Dashboard → Instances
 ```
 
+![Day 12 - Attach Volume to EC2 Instance.1](images/Day-012.1.png)
+
 2. Locate the instance:
 ```text
 nautilus-ec2
@@ -64,6 +66,8 @@ nautilus-ec2
 
 ⚠️ Wait if the instance is still **initializing**.
 
+![Day 12 - Attach Volume to EC2 Instance.2](images/Day-012.2.png)
+
 ---
 
 # 💾 Step 3 — Locate the Volume
@@ -72,6 +76,8 @@ nautilus-ec2
 ```text
 Elastic Block Store → Volumes
 ```
+
+![Day 12 - Attach Volume to EC2 Instance.3](images/Day-012.3.png)
 
 2. Search for the volume:
 ```text
@@ -82,6 +88,8 @@ nautilus-volume
 ```text
 Available
 ```
+
+![Day 12 - Attach Volume to EC2 Instance.4](images/Day-012.4.png)
 
 ---
 
@@ -94,6 +102,8 @@ Available
 Attach volume
 ```
 
+![Day 12 - Attach Volume to EC2 Instance.5](images/Day-012.5.png)
+
 4. Configure the attachment:
 
 | Setting | Value |
@@ -105,6 +115,8 @@ Attach volume
 ```text
 Attach volume
 ```
+
+![Day 12 - Attach Volume to EC2 Instance.6](images/Day-012.6.png)
 
 ---
 
@@ -122,6 +134,8 @@ Expected results:
 | Volume State | `In-use` |
 | Instance | `nautilus-ec2` |
 | Device | `/dev/sdb` |
+
+![Day 12 - Attach Volume to EC2 Instance.7](images/Day-012.7.png)
 
 3. or verify using CLI
 
@@ -170,6 +184,8 @@ aws ec2 describe-volumes \
 ```
 
 > output: /dev/sdb
+
+![Day 12 - Attach Volume to EC2 Instance.8](images/Day-012.8.png)
 
 ---
 
