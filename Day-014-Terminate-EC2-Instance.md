@@ -89,8 +89,16 @@ Expected status:
 Terminated
 ```
 
-
 ⚠️ It may briefly show **Shutting-down** before reaching **Terminated**.
+
+3. or verify via CLI
+```bash
+aws ec2 describe-instances \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=xfusion-ec2" \
+  --query "Reservations[*].Instances[*].State.Name" \
+  --output text
+```
 
 ---
 
