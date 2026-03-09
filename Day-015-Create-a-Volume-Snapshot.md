@@ -100,6 +100,31 @@ Expected snapshot details:
 | Volume | `datacenter-vol` |
 | Status | `Completed` |
 
+or verify via CLI
+
+First: Get the Volume ID from the Name Tag
+
+```python
+aws ec2 describe-volumes \
+  --region us-east-1 \
+  --filters "Name=tag:Name,Values=datacenter-vol" \
+  --query "Volumes[0].VolumeId" \
+  --output text
+```
+
+> Output: **vol-079618ebae5486561**
+
+Second: List Snapshots for the Volume
+
+```python
+aws ec2 describe-snapshots \
+  --region us-east-1 \
+  --filters "Name=volume-id,Values=vol-079618ebae5486561" \
+  --query "Snapshots[*].[SnapshotId,State,StartTime,Tags]" \
+  --output text
+```
+
+> Output: snap-059b9aeb5d7ac71ee  completed  2026-03-09T07:43:52.692Z Name **datacenter-vol-ss**
 ---
 
 ## ✔️ Validation Checklist
