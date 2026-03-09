@@ -44,6 +44,8 @@ You can confirm the region from the **top-right corner** of the AWS Console.
 Instances
 ```
 
+![Day 14 - Terminate EC2 Instance.1](images/Day-014.1.png)
+
 3. Search for the instance:
 ```text
 xfusion-ec2
@@ -62,6 +64,8 @@ Confirm the instance details:
 
 If the instance is running, it must still be terminated.
 
+![Day 14 - Terminate EC2 Instance.2](images/Day-014.2.png)
+
 ---
 
 # 🗑️ Step 4 — Terminate the Instance
@@ -73,9 +77,13 @@ If the instance is running, it must still be terminated.
 Terminate instance
 ```
 
+![Day 14 - Terminate EC2 Instance.3](images/Day-014.3.png)
+
 4. Confirm the action when prompted.
 
 AWS will now begin terminating the instance.
+
+![Day 14 - Terminate EC2 Instance.4](images/Day-014.4.png)
 
 ---
 
@@ -91,6 +99,10 @@ Terminated
 
 ⚠️ It may briefly show **Shutting-down** before reaching **Terminated**.
 
+![Day 14 - Terminate EC2 Instance.5](images/Day-014.5.png)
+![Day 14 - Terminate EC2 Instance.6](images/Day-014.6.png)
+
+
 3. or verify via CLI
 ```bash
 aws ec2 describe-instances \
@@ -99,6 +111,8 @@ aws ec2 describe-instances \
   --query "Reservations[*].Instances[*].State.Name" \
   --output text
 ```
+
+![Day 14 - Terminate EC2 Instance.7](images/Day-014.7.png)
 
 ---
 
