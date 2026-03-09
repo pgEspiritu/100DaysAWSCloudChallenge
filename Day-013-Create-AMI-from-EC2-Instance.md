@@ -42,6 +42,8 @@ You can check or change the region in the **top-right corner** of the AWS Consol
 Instances
 ```
 
+![Day 14 - Create AMI from EC2 Instance.1](images/Day-013.1.png)
+
 3. Locate the instance:
 ```text
 xfusion-ec2
@@ -53,6 +55,8 @@ xfusion-ec2
 Running
 ```
 
+![Day 14 - Create AMI from EC2 Instance.2](images/Day-013.2.png)
+
 ---
 
 ## 📸 Step 3 — Create AMI
@@ -63,6 +67,8 @@ Running
 ```text
 Image and templates → Create image
 ```
+
+![Day 14 - Create AMI from EC2 Instance.3](images/Day-013.3.png)
 
 4. Configure the image details:
 
@@ -78,6 +84,9 @@ Image and templates → Create image
 Create image
 ```
 
+![Day 14 - Create AMI from EC2 Instance.4](images/Day-013.4.png)
+![Day 14 - Create AMI from EC2 Instance.5](images/Day-013.5.png)
+
 ---
 
 ## 🔍 Step 4 — Monitor AMI Creation
@@ -87,15 +96,22 @@ Create image
 EC2 Dashboard → Images → AMIs
 ```
 
+![Day 14 - Create AMI from EC2 Instance.6](images/Day-013.6.png)
+
 2. Search for:
 ```text
 xfusion-ec2-ami
 ```
 
+![Day 14 - Create AMI from EC2 Instance.7](images/Day-013.7.1.png)
+
+
 3. Wait until the **AMI state** changes from:
 ```text
 Pending → Available
 ```
+
+![Day 14 - Create AMI from EC2 Instance.8](images/Day-013.1.2.png)
 
 4. or verify via CLI
 
@@ -132,6 +148,8 @@ aws ec2 describe-instances \
   --output text
 ```
 > Output: **xfusion-ec2**
+
+![Day 14 - Create AMI from EC2 Instance.8](images/Day-013.8.png)
 
 ---
 
