@@ -44,6 +44,9 @@ us-east-1 (N. Virginia)
 
 1. Open the **EC2 Dashboard**.
 2. Click **Elastic Block Store → Volumes**.
+
+![Day 15 - Create a Volume Snapshot.1](images/Day-015.1.png)
+
 3. Locate the volume:
 ```text
 datacenter-vol
@@ -54,12 +57,17 @@ datacenter-vol
 Available
 ```
 
+![Day 15 - Create a Volume Snapshot.2](images/Day-015.2.png)
+
 ---
 
 ## 💾 Step 3 — Create Snapshot
 
 1. Select **datacenter-vol**.
 2. Click **Actions → Create Snapshot**.
+
+![Day 15 - Create a Volume Snapshot.3](images/Day-015.3.png)
+
 3. Configure snapshot details:
 
 | Setting | Value |
@@ -67,10 +75,14 @@ Available
 | Name | `datacenter-vol-ss` |
 | Description | `datacenter Snapshot` |
 
+![Day 15 - Create a Volume Snapshot.4](images/Day-015.4.png)
+
 4. Click:
 ```text
 Create Snapshot
 ```
+
+![Day 15 - Create a Volume Snapshot.5](images/Day-015.5.png)
 
 ---
 
@@ -85,7 +97,11 @@ EC2 Dashboard → Snapshots
 datacenter-vol-ss
 ```
 
+![Day 15 - Create a Volume Snapshot.6](images/Day-015.6.png)
+
 3. Wait until the **Status** changes from **Pending → Completed**.
+
+![Day 15 - Create a Volume Snapshot.7](images/Day-015.7.png)
 
 ---
 
@@ -125,6 +141,9 @@ aws ec2 describe-snapshots \
 ```
 
 > Output: snap-059b9aeb5d7ac71ee  completed  2026-03-09T07:43:52.692Z Name **datacenter-vol-ss**
+
+![Day 15 - Create a Volume Snapshot.8](images/Day-015.8.png)
+
 ---
 
 ## ✔️ Validation Checklist
