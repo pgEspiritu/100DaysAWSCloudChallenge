@@ -96,6 +96,11 @@ After creation:
 iamuser_yousuf
 ```
 
+3. or verify via CLI
+```bash
+aws iam list-users
+```
+
 ---
 
 # ✔️ Validation Checklist
