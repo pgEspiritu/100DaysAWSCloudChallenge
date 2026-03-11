@@ -83,6 +83,11 @@ Create group
 iamgroup_mariyam
 ```
 
+3. or check via CLI
+```text
+aws iam list-groups
+```
+
 ---
 
 # ✔️ Validation Checklist
