@@ -51,10 +51,14 @@ IAM
 Users
 ```
 
+![Day 16 - Create IAM User.1](images/Day-016.1.png)
+
 2. Click:
 ```text
 Create user
 ```
+
+![Day 16 - Create IAM User.2](images/Day-016.2.png)
 
 ---
 
@@ -66,6 +70,8 @@ Enter the following:
 |---------|-------|
 | User name | `iamuser_yousuf` |
 
+![Day 16 - Create IAM User.3](images/Day-016.3.png)
+
 ### Permissions
 - Leave permissions **empty** (no policies required unless specified).
 
@@ -73,6 +79,8 @@ Click:
 ```text
 Next
 ```
+
+![Day 16 - Create IAM User.4](images/Day-016.4.png)
 
 ---
 
@@ -83,6 +91,8 @@ Next
 ```text
 Create user
 ```
+
+![Day 16 - Create IAM User.5](images/Day-016.5.png)
 
 ---
 
@@ -96,10 +106,14 @@ After creation:
 iamuser_yousuf
 ```
 
+![Day 16 - Create IAM User.6](images/Day-016.6.png)
+
 3. or verify via CLI
 ```bash
 aws iam list-users
 ```
+
+![Day 16 - Create IAM User.7](images/Day-016.7.png)
 
 ---
 
