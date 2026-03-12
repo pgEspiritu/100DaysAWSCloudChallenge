@@ -133,6 +133,14 @@ iampolicy_anita
 
 3. Confirm the policy exists.
 
+4. or check via CLI if iampolicy_anita exists:
+```bash
+aws iam list-policies \
+  --scope Local \
+  --query "Policies[?PolicyName=='iampolicy_anita'].[PolicyName,Arn]" \
+  --output table
+```
+
 ---
 
 # ✔️ Validation Checklist
