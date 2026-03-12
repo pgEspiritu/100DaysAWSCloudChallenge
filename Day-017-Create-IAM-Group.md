@@ -50,10 +50,14 @@ IAM
 User groups
 ```
 
+![Day 17 - Create IAM Group.1](images/Day-017.1.png)
+
 2. Click:
 ```text
 Create group
 ```
+
+![Day 17 - Create IAM Group.2](images/Day-017.2.png)
 
 ---
 
@@ -65,6 +69,8 @@ Enter the required information:
 |---------|-------|
 | User group name | `iamgroup_mariyam` |
 
+![Day 17 - Create IAM Group.3](images/Day-017.3.png)
+
 ### Attach permissions
 - Leave permissions **empty** (no policies required unless specified).
 
@@ -72,6 +78,8 @@ Click:
 ```text
 Create group
 ```
+
+![Day 17 - Create IAM Group.4](images/Day-017.4.png)
 
 ---
 
@@ -83,10 +91,14 @@ Create group
 iamgroup_mariyam
 ```
 
+![Day 17 - Create IAM Group.5](images/Day-017.5.png)
+
 3. or check via CLI
 ```text
 aws iam list-groups
 ```
+
+![Day 17 - Create IAM Group.6](images/Day-017.6.png)
 
 ---
 
