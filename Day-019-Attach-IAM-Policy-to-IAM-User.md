@@ -115,6 +115,14 @@ attached to:
 iamuser_anita
 ```
 
+or verify the attached policy to the user using CLI:
+```bash
+aws iam list-attached-user-policies \
+  --user-name iamuser_anita \
+  --query "AttachedPolicies[*].[PolicyName,PolicyArn]" \
+  --output table
+```
+
 ---
 
 # ✅ Validation Checklist
