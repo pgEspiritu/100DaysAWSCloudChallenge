@@ -192,6 +192,14 @@ Elastic IP page should show:
 Associated instance: xfusion-ec2
 ```
 
+or check via CLI, given that the instance ID of xfusion-ec2 is i-030228a856221608d
+```bash
+aws ec2 describe-addresses \
+  --filters "Name=instance-id,Values=i-030228a856221608d \
+  --query "Addresses[*].[PublicIp,Tags[?Key=='Name'].Value|[0]]" \
+  --output table
+```
+
 ---
 
 # ✔️ Validation Checklist
