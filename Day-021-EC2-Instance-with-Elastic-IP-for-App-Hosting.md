@@ -142,7 +142,7 @@ Allocate
 1. Select the newly created Elastic IP.
 2. Click:
 ```text
-Actions → Add/Edit tags
+Tags → Manage Tags
 ```
 
 Add tag:
