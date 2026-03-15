@@ -14,10 +14,10 @@ Create the following AWS resources:
 
 | Resource | Requirement |
 |----------|-------------|
-| EC2 Instance Name | `nautilus-ec2` |
+| EC2 Instance Name | `xfusion-ec2` |
 | AMI | Any Linux (Ubuntu recommended) |
 | Instance Type | `t2.micro` |
-| Elastic IP Name | `nautilus-eip` |
+| Elastic IP Name | `xfusion-eip` |
 | Region | `us-east-1` |
 
 ---
@@ -61,7 +61,7 @@ Launch instances
 
 | Field | Value |
 |------|------|
-| Name | `nautilus-ec2` |
+| Name | `xfusion-ec2` |
 
 ---
 
@@ -149,7 +149,7 @@ Add tag:
 
 | Key | Value |
 |-----|------|
-| Name | nautilus-eip |
+| Name | xfusion-eip |
 
 Save changes.
 
@@ -168,7 +168,7 @@ Configure:
 | Setting | Value |
 |---------|-------|
 | Resource type | Instance |
-| Instance | `nautilus-ec2` |
+| Instance | `xfusion-ec2` |
 | Private IP | Auto-selected |
 
 Click:
@@ -189,7 +189,7 @@ Check that:
 
 Elastic IP page should show:
 ```text
-Associated instance: nautilus-ec2
+Associated instance: xfusion-ec2
 ```
 
 ---
@@ -197,11 +197,11 @@ Associated instance: nautilus-ec2
 # ✔️ Validation Checklist
 
 - [x] EC2 instance created
-- [x] Name = `nautilus-ec2`
+- [x] Name = `xfusion-ec2`
 - [x] Instance type = `t2.micro`
 - [x] Linux AMI used
 - [x] Elastic IP allocated
-- [x] Elastic IP tagged `nautilus-eip`
+- [x] Elastic IP tagged `xfusion-eip`
 - [x] Elastic IP associated with instance
 - [x] Instance running
 
@@ -209,7 +209,7 @@ Associated instance: nautilus-ec2
 
 # 🏁 Result
 
-✅ EC2 instance **`nautilus-ec2`** is running with a **static public IP** via Elastic IP **`nautilus-eip`**, ensuring consistent external access for the application.
+✅ EC2 instance **`xfusion-ec2`** is running with a **static public IP** via Elastic IP **`xfusion-eip`**, ensuring consistent external access for the application.
 
 ---
 
