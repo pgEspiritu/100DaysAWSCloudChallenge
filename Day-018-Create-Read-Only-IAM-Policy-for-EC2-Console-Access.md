@@ -58,10 +58,14 @@ IAM
 Policies
 ```
 
+![Day 18 - Create Read Only Policy for EC2 Instance.1](images/Day-018.1.png)
+
 2. Click:
 ```text
 Create policy
 ```
+
+![Day 18 - Create Read Only Policy for EC2 Instance.2](images/Day-018.2.png)
 
 ---
 
@@ -101,6 +105,8 @@ Replace the existing content with the following policy.
 ```
 > 👉 These permissions allow users to view EC2 resources in the console without making changes.
 
+![Day 18 - Create Read Only Policy for EC2 Instance.3](images/Day-018.3.png)
+
 Click:
 ```text
 Next
@@ -121,6 +127,9 @@ Click:
 Create policy
 ```
 
+![Day 18 - Create Read Only Policy for EC2 Instance.4](images/Day-018.4.png)
+![Day 18 - Create Read Only Policy for EC2 Instance.5](images/Day-018.5.png)
+
 ---
 
 # ✅ Step 6 — Verify Policy Creation
@@ -131,6 +140,8 @@ Create policy
 iampolicy_anita
 ```
 
+![Day 18 - Create Read Only Policy for EC2 Instance.6](images/Day-018.6.png)
+
 3. Confirm the policy exists.
 
 4. or check via CLI if iampolicy_anita exists:
@@ -140,6 +151,8 @@ aws iam list-policies \
   --query "Policies[?PolicyName=='iampolicy_anita'].[PolicyName,Arn]" \
   --output table
 ```
+
+![Day 18 - Create Read Only Policy for EC2 Instance.7](images/Day-018.7.png)
 
 ---
 
