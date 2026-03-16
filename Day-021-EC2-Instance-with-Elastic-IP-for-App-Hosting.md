@@ -14,10 +14,10 @@ Create the following AWS resources:
 
 | Resource | Requirement |
 |----------|-------------|
-| EC2 Instance Name | `xfusion-ec2` |
+| EC2 Instance Name | `devops-ec2` |
 | AMI | Any Linux (Ubuntu recommended) |
 | Instance Type | `t2.micro` |
-| Elastic IP Name | `xfusion-eip` |
+| Elastic IP Name | `devops-eip` |
 | Region | `us-east-1` |
 
 ---
@@ -61,7 +61,7 @@ Launch instances
 
 | Field | Value |
 |------|------|
-| Name | `xfusion-ec2` |
+| Name | `devops-ec2` |
 
 ---
 
@@ -149,7 +149,7 @@ Add tag:
 
 | Key | Value |
 |-----|------|
-| Name | xfusion-eip |
+| Name | devops-eip |
 
 Save changes.
 
@@ -168,7 +168,7 @@ Configure:
 | Setting | Value |
 |---------|-------|
 | Resource type | Instance |
-| Instance | `xfusion-ec2` |
+| Instance | `devops-ec2` |
 | Private IP | Auto-selected |
 
 Click:
@@ -189,10 +189,10 @@ Check that:
 
 Elastic IP page should show:
 ```text
-Associated instance: xfusion-ec2
+Associated instance: devops-ec2
 ```
 
-or check via CLI, given that the instance ID of xfusion-ec2 is i-030228a856221608d
+or check via CLI, given that the instance ID of devops-ec2 is i-030228a856221608d
 ```bash
 aws ec2 describe-addresses \
   --filters "Name=instance-id,Values=i-030228a856221608d \
@@ -205,11 +205,11 @@ aws ec2 describe-addresses \
 # ✔️ Validation Checklist
 
 - [x] EC2 instance created
-- [x] Name = `xfusion-ec2`
+- [x] Name = `devops-ec2`
 - [x] Instance type = `t2.micro`
 - [x] Linux AMI used
 - [x] Elastic IP allocated
-- [x] Elastic IP tagged `xfusion-eip`
+- [x] Elastic IP tagged `devops-eip`
 - [x] Elastic IP associated with instance
 - [x] Instance running
 
@@ -217,7 +217,7 @@ aws ec2 describe-addresses \
 
 # 🏁 Result
 
-✅ EC2 instance **`xfusion-ec2`** is running with a **static public IP** via Elastic IP **`xfusion-eip`**, ensuring consistent external access for the application.
+✅ EC2 instance **`devops-ec2`** is running with a **static public IP** via Elastic IP **`devops-eip`**, ensuring consistent external access for the application.
 
 ---
 
