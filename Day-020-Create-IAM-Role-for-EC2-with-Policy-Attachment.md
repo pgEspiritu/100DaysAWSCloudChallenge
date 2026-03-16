@@ -53,10 +53,14 @@ IAM
 Roles
 ```
 
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.1](images/Day-020.1.png)
+
 2. Click:
 ```text
 Create role
 ```
+
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.2](images/Day-020.2.png)
 
 ---
 
@@ -79,6 +83,9 @@ Click:
 next
 ```
 
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.3](images/Day-020.3.png)
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.4](images/Day-020.4.png)
+
 ---
 
 # 📎 Step 5 — Attach Permissions Policy
@@ -94,6 +101,8 @@ Click:
 ```text
 next
 ```
+
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.5](images/Day-020.5.png)
 
 ---
 
@@ -111,6 +120,8 @@ Click:
 Create role
 ```
 
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.6](images/Day-020.6.png)
+
 ---
 
 # ✅ Step 7 — Verify Role Creation
@@ -125,6 +136,8 @@ iamrole_anita
 
 - Trusted entity = **EC2**
 - Attached policy = **iampolicy_anita**
+
+![Day 20 - Create IAM Role Policy for EC2 with Policy Attachment.7](images/Day-020.7.png)
 
 ---
 
