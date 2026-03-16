@@ -54,10 +54,14 @@ IAM
 Users
 ```
 
+![Day 19 - Attach IAM Policy to IAM User.1](images/Day-019.1.png)
+
 2. Locate and click:
 ```text
 iamuser_anita
 ```
+
+![Day 19 - Attach IAM Policy to IAM User.2](images/Day-019.2.png)
 
 ---
 
@@ -68,6 +72,8 @@ iamuser_anita
 ```text
 Add permissions
 ```
+
+![Day 19 - Attach IAM Policy to IAM User.3](images/Day-019.3.png)
 
 3. Select:
 ```text
@@ -94,11 +100,15 @@ iampolicy_anita
 Next
 ```
 
+![Day 19 - Attach IAM Policy to IAM User.4](images/Day-019.4.png)
+
 2. Review permissions.
 3. Click:
 ```text
 Add permissions
 ```
+
+![Day 19 - Attach IAM Policy to IAM User.5](images/Day-019.5.png)
 
 ---
 
@@ -115,6 +125,8 @@ attached to:
 iamuser_anita
 ```
 
+![Day 19 - Attach IAM Policy to IAM User.6](images/Day-019.6.png)
+
 or verify the attached policy to the user using CLI:
 ```bash
 aws iam list-attached-user-policies \
@@ -122,6 +134,8 @@ aws iam list-attached-user-policies \
   --query "AttachedPolicies[*].[PolicyName,PolicyArn]" \
   --output table
 ```
+
+![Day 19 - Attach IAM Policy to IAM User.7](images/Day-019.7.png)
 
 ---
 
