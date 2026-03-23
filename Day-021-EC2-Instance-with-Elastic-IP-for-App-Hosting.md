@@ -53,6 +53,8 @@ Click:
 Launch instances
 ```
 
+![Day 21.1](images/Day-021.1.png)
+
 ---
 
 ## Configure Instance Details
@@ -72,6 +74,8 @@ Select any Linux AMI:
 ✅ **Ubuntu Server** *(recommended)*  
 (or Amazon Linux)
 
+![Day 21.2](images/Day-021.2.png)
+
 ---
 
 ### 3️⃣ Instance Type
@@ -88,6 +92,8 @@ t2.micro
 - Choose existing key pair **or**
 - Select **Proceed without key pair** *(allowed for lab unless specified)*
 
+![Day 21.3](images/Day-021.3.png)
+
 ---
 
 ### 5️⃣ Network Settings
@@ -97,6 +103,8 @@ Keep defaults:
 - Default VPC
 - Auto-assign Public IP → **Enabled**
 - Default Security Group
+
+![Day 21.4](images/Day-021.4.png)
 
 ---
 
@@ -111,6 +119,8 @@ Click:
 Launch instance
 ```
 
+![Day 21.5](images/Day-021.5.png)
+
 ---
 
 # ✅ Step 3 — Verify Instance Running
@@ -120,6 +130,8 @@ Launch instance
 Elastic IPs
 ```
 
+![Day 21.6](images/Day-021.6.png)
+
 ---
 
 ### Allocate Address
@@ -128,6 +140,8 @@ Elastic IPs
 ```text
 Allocate Elastic IP address
 ```
+
+![Day 21.7](images/Day-021.7.png)
 
 2. Keep defaults.
 3. Click:
@@ -153,6 +167,8 @@ Add tag:
 
 Save changes.
 
+![Day 21.8](images/Day-021.8.png)
+
 ---
 
 # 🔗 Step 6 — Associate Elastic IP to Instance
@@ -162,6 +178,8 @@ Save changes.
 ```text
 Actions → Associate Elastic IP address
 ```
+
+![Day 21.9](images/Day-021.9.png)
 
 Configure:
 
@@ -175,6 +193,8 @@ Click:
 ```text
 Associate
 ```
+
+![Day 21.10](images/Day-021.10.png)
 
 ---
 
@@ -192,6 +212,8 @@ Elastic IP page should show:
 Associated instance: devops-ec2
 ```
 
+![Day 21.11](images/Day-021.11.png)
+
 or check via CLI, given that the instance ID of devops-ec2 is i-030228a856221608d
 ```bash
 aws ec2 describe-addresses \
@@ -199,6 +221,8 @@ aws ec2 describe-addresses \
   --query "Addresses[*].[PublicIp,Tags[?Key=='Name'].Value|[0]]" \
   --output table
 ```
+
+![Day 21.12](images/Day-021.12.png)
 
 ---
 
