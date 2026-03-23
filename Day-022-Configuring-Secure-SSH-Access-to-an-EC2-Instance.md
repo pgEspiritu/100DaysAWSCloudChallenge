@@ -42,6 +42,8 @@ Click:
 Launch Instance
 ```
 
+![Day 22.1](images/Day-022.1.png)
+
 ### Configure:
 
 | Setting | Value |
@@ -50,6 +52,9 @@ Launch Instance
 | AMI | Ubuntu Server (any Linux AMI allowed) |
 | Instance Type | `t2.micro` |
 | Key Pair | Proceed without key pair (temporary) |
+
+![Day 22.2](images/Day-022.2.png)
+![Day 22.3](images/Day-022.3.png)
 
 ---
 
@@ -68,11 +73,15 @@ Click:
 Launch Instance
 ```
 
+![Day 22.4](images/Day-022.4.png)
+
 Wait until:
 ```text
 Instance State → Running
 Status Checks → 2/2 passed
 ```
+
+![Day 22.5](images/Day-022.5.png)
 
 ---
 
@@ -99,6 +108,8 @@ This creates:
 /root/.ssh/id_rsa.pub
 ```
 
+![Day 22.6](images/Day-022.6.png)
+
 ---
 
 # 🌐 PART 4 — Connect to EC2 (Temporary Access)
@@ -107,6 +118,9 @@ From EC2 Console:
 ```text
 Instance → Connect → EC2 Instance Connect
 ```
+
+![Day 22.7](images/Day-022.7.png)
+![Day 22.8](images/Day-022.8.png)
 
 Login as:
 ```text
@@ -129,6 +143,8 @@ mkdir -p /root/.ssh
 chmod 700 /root/.ssh
 ```
 
+![Day 22.9](images/Day-022.9.png)
+
 ---
 
 # 📋 PART 6 — Copy Public Key from aws-client
@@ -139,6 +155,8 @@ cat /root/.ssh/id_rsa.pub
 ```
 Copy the entire output.
 
+![Day 22.10](images/Day-022.10.png)
+
 ---
 
 # 🔐 PART 7 — Add Key to EC2 Authorized Keys
@@ -147,7 +165,12 @@ On EC2 root shell:
 ```bash
 nano /root/.ssh/authorized_keys
 ```
+
+![Day 22.11](images/Day-022.11.png)
+
 Paste the public key.
+
+![Day 22.12](images/Day-022.12.png)
 
 Save and exit.
 
@@ -165,6 +188,8 @@ Edit SSH config:
 nano /etc/ssh/sshd_config
 ```
 
+![Day 22.13](images/Day-022.13.png)
+
 Find:
 ```text
 PermitRootLogin
@@ -180,6 +205,8 @@ PermitRootLogin yes
 PubkeyAuthentication yes
 ```
 
+![Day 22.14](images/Day-022.14.png)
+
 ## Restart SSH:
 ```bash
 systemctl restart sshd
@@ -189,6 +216,8 @@ systemctl restart sshd
 ```bash
 service ssh restart
 ```
+
+![Day 22.15](images/Day-022.15.png)
 
 ---
 
@@ -203,6 +232,8 @@ ssh root@<EC2-PUBLIC-IP>
 ```text
 Login WITHOUT password prompt
 ```
+
+![Day 22.16](images/Day-022.16.png)
 
 ---
 
