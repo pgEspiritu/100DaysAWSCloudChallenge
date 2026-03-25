@@ -176,26 +176,6 @@ Save rules.
 # 🩺 Step 6 — Verify Target Health
 
 Navigate:
-
-Open attached **Security Group**.
-
-### Edit Inbound Rules
-
-Add rule:
-
-| Type | Protocol | Port | Source |
-|---|---|---|---|
-| HTTP | TCP | 80 | xfusion-sg |
-
-✅ This allows only ALB traffic.
-
-Save rules.
-
----
-
-# 🩺 Step 6 — Verify Target Health
-
-Navigate:
 ```text
 EC2 → Target Groups → xfusion-tg → Targets
 ```
