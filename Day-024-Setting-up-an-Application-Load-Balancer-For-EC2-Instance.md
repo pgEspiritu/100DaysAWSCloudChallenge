@@ -108,7 +108,7 @@
 
 ```bash
 # 🧪 Test ALB DNS endpoint
-curl http://nautilus-alb-1234567890.us-east-1.elb.amazonaws.com
+curl http://nautilus-alb-1150587295.us-east-1.elb.amazonaws.com
 
 # 📊 Check target health
 aws elbv2 describe-target-health --target-group-arn <target-group-arn> --region us-east-1
