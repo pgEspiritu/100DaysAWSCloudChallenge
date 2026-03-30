@@ -6,13 +6,13 @@ Set up an **Application Load Balancer (ALB)** in front of an existing EC2 instan
 
 ### Requirements
 
-- ALB Name: **xfusion-alb**
-- Target Group: **xfusion-tg**
-- Security Group: **xfusion-sg**
+- ALB Name: **nautilus-alb**
+- Target Group: **nautilus-tg**
+- Security Group: **nautilus-sg**
 - Open **HTTP (Port 80)** publicly
 - Route traffic:
 ```text
-ALB :80 → xfusion-ec2 :80
+ALB :80 → nautilus-ec2 :80
 ```
 - Region: **us-east-1**
 - Use **AWS Management Console**
@@ -30,7 +30,7 @@ us-east-1 (N. Virginia)
 
 ---
 
-# 🔐 Step 2 — Create Security Group (xfusion-sg)
+# 🔐 Step 2 — Create Security Group (nautilus-sg)
 
 ## Navigate:
 ```text
@@ -41,7 +41,7 @@ EC2 → Security Groups → Create security group
 
 | Setting | Value |
 |---|---|
-| Security group name | xfusion-sg |
+| Security group name | nautilus-sg |
 | Description | Allow HTTP access to ALB |
 | VPC | Default VPC |
 
@@ -55,7 +55,7 @@ EC2 → Security Groups → Create security group
 
 ---
 
-# 🎯 Step 3 — Create Target Group (xfusion-tg)
+# 🎯 Step 3 — Create Target Group (nautilus-tg)
 
 ## Navigate:
 ```text
@@ -67,7 +67,7 @@ EC2 → Target Groups → Create target group
 | Setting | Value |
 |---|---|
 | Target type | Instances |
-| Target group name | xfusion-tg |
+| Target group name | nautilus-tg |
 | Protocol | HTTP |
 | Port | 80 |
 | VPC | Default VPC |
@@ -80,7 +80,7 @@ Click **Next**
 
 1. Select instance:
 ```text
-xfusion-ec2
+nautilus-ec2
 ```
 2. Click **Include as pending below**
 3. Click **Create target group**
@@ -105,7 +105,7 @@ Application Load Balancer
 
 | Setting | Value |
 |---|---|
-| Name | xfusion-alb |
+| Name | nautilus-alb |
 | Scheme | Internet-facing |
 | IP type | IPv4 |
 
@@ -125,7 +125,7 @@ Application Load Balancer
 
 Select:
 ```text
-xfusion-sg
+nautilus-sg
 ```
 
 ---
@@ -136,7 +136,7 @@ xfusion-sg
 |---|---|
 | Protocol | HTTP |
 | Port | 80 |
-| Forward to | xfusion-tg |
+| Forward to | nautilus-tg |
 
 Click:
 ```text
@@ -154,7 +154,7 @@ The EC2 instance must allow traffic from the ALB.
 
 ## Navigate:
 ```text
-EC2 → Instances → xfusion-ec2
+EC2 → Instances → nautilus-ec2
 ```
 
 Open attached **Security Group**.
@@ -165,7 +165,7 @@ Add rule:
 
 | Type | Protocol | Port | Source |
 |---|---|---|---|
-| HTTP | TCP | 80 | xfusion-sg |
+| HTTP | TCP | 80 | nautilus-sg |
 
 ✅ This allows only ALB traffic.
 
@@ -177,7 +177,7 @@ Save rules.
 
 Navigate:
 ```text
-EC2 → Target Groups → xfusion-tg → Targets
+EC2 → Target Groups → nautilus-tg → Targets
 ```
 
 Wait until:
@@ -198,14 +198,14 @@ EC2 → Load Balancers
 
 2. Select:
 ```text
-xfusion-alb
+nautilus-alb
 ```
 
 3. Copy **DNS Name**
 
 Example:
 ```text
-http://xfusion-alb-123456.us-east-1.elb.amazonaws.com
+http://nautilus-alb-123456.us-east-1.elb.amazonaws.com
 ```
 
 4. Open in browser.
@@ -222,13 +222,13 @@ Nginx default page loads
 Internet
 │
 ▼
-Application Load Balancer (xfusion-alb)
+Application Load Balancer (nautilus-alb)
 │ Port 80
 ▼
-Target Group (xfusion-tg)
+Target Group (nautilus-tg)
 │
 ▼
-EC2 Instance (xfusion-ec2 : Nginx)
+EC2 Instance (nautilus-ec2 : Nginx)
 ```
 
 ---
@@ -238,10 +238,10 @@ EC2 Instance (xfusion-ec2 : Nginx)
 | Requirement | Status |
 |---|---|
 | ALB created | ✅ |
-| Name xfusion-alb | ✅ |
+| Name nautilus-alb | ✅ |
 | Target group created | ✅ |
-| Name xfusion-tg | ✅ |
-| Security group xfusion-sg | ✅ |
+| Name nautilus-tg | ✅ |
+| Security group nautilus-sg | ✅ |
 | Port 80 public access | ✅ |
 | SG attached to ALB | ✅ |
 | Traffic routed to EC2 | ✅ |
