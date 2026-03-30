@@ -1,255 +1,114 @@
-# ✅ AWS Application Load Balancer Setup
+# Steps to Configure Application Load Balancer (ALB) on AWS
 
-## 📌 Objective
-
-Set up an **Application Load Balancer (ALB)** in front of an existing EC2 instance running Nginx.
-
-### Requirements
-
-- ALB Name: **nautilus-alb**
-- Target Group: **nautilus-tg**
-- Security Group: **nautilus-sg**
-- Open **HTTP (Port 80)** publicly
-- Route traffic:
-```text
-ALB :80 → nautilus-ec2 :80
-```
-- Region: **us-east-1**
-- Use **AWS Management Console**
+## Prerequisites
+- Access to AWS Console with provided credentials
+- EC2 instance named `nautilus-ec2` already running with Nginx on port 80
+- Region set to `us-east-1`
 
 ---
 
-# 🧭 Step 1 — Login to AWS Console
+## Step 1: Login to AWS Console
 
-1. Open provided **Console URL**
-2. Login using credentials
-3. Set region (top-right):
-```text
-us-east-1 (N. Virginia)
-```
+1. Navigate to: `https://717866278654.signin.aws.amazon.com/console?region=us-east-1`
+2. Login with credentials:
+   - **Username:** `kk_labs_user_855470`
+   - **Password:** `8rt^N@0FM1FM`
 
 ---
 
-# 🔐 Step 2 — Create Security Group (nautilus-sg)
+## Step 2: Create Security Group for ALB
 
-## Navigate:
-```text
-EC2 → Security Groups → Create security group
-```
-
-### Configure:
-
-| Setting | Value |
-|---|---|
-| Security group name | nautilus-sg |
-| Description | Allow HTTP access to ALB |
-| VPC | Default VPC |
-
-### Inbound Rule
-
-| Type | Protocol | Port | Source |
-|---|---|---|---|
-| HTTP | TCP | 80 | 0.0.0.0/0 |
-
-✅ Click **Create security group**
+1. Navigate to **VPC** → **Security Groups** → **Create security group**
+2. Configure:
+   - **Security group name:** `nautilus-sg`
+   - **Description:** `Security group for ALB - port 80 public access`
+   - **VPC:** Select default VPC
+3. **Inbound rules:**
+   - **Type:** HTTP
+   - **Protocol:** TCP
+   - **Port range:** 80
+   - **Source:** 0.0.0.0/0 (Anywhere-IPv4)
+4. **Outbound rules:** Keep default (all traffic allowed)
+5. Click **Create security group**
 
 ---
 
-# 🎯 Step 3 — Create Target Group (nautilus-tg)
+## Step 3: Create Target Group
 
-## Navigate:
-```text
-EC2 → Target Groups → Create target group
-```
-
-### Basic Configuration
-
-| Setting | Value |
-|---|---|
-| Target type | Instances |
-| Target group name | nautilus-tg |
-| Protocol | HTTP |
-| Port | 80 |
-| VPC | Default VPC |
-
-Click **Next**
-
----
-
-## Register Targets
-
-1. Select instance:
-```text
-nautilus-ec2
-```
-2. Click **Include as pending below**
-3. Click **Create target group**
+1. Navigate to **EC2** → **Target Groups** → **Create target group**
+2. **Basic configuration:**
+   - **Choose target type:** Instances
+   - **Target group name:** `nautilus-tg`
+   - **Protocol:** HTTP
+   - **Port:** 80
+   - **VPC:** Select default VPC
+   - **Protocol version:** HTTP1
+3. **Health checks:**
+   - **Health check protocol:** HTTP
+   - **Health check path:** /
+   - **Advanced health check settings:** Keep defaults
+4. Click **Next**
+5. **Register targets:**
+   - Select the `nautilus-ec2` instance
+   - Click **Include as pending below**
+   - Click **Create target group**
 
 ---
 
-# ⚖️ Step 4 — Create Application Load Balancer
+## Step 4: Create Application Load Balancer
 
-## Navigate:
-```text
-EC2 → Load Balancers → Create Load Balancer
-```
-
-Select:
-```text
-Application Load Balancer
-```
-
----
-
-## Basic Configuration
-
-| Setting | Value |
-|---|---|
-| Name | nautilus-alb |
-| Scheme | Internet-facing |
-| IP type | IPv4 |
+1. Navigate to **EC2** → **Load Balancers** → **Create Load Balancer**
+2. Select **Application Load Balancer**
+3. **Basic configuration:**
+   - **Load balancer name:** `nautilus-alb`
+   - **Scheme:** Internet-facing
+   - **IP address type:** IPv4
+4. **Network mapping:**
+   - **VPC:** Select default VPC
+   - **Mappings:** Select at least two availability zones with subnets
+5. **Security groups:**
+   - Remove default security group
+   - Select `nautilus-sg` (created in Step 2)
+6. **Listeners and routing:**
+   - **Protocol:** HTTP
+   - **Port:** 80
+   - **Default action:** Forward to `nautilus-tg`
+7. Click **Create load balancer**
 
 ---
 
-## Network Mapping
+## Step 5: Update EC2 Instance Security Group
 
-- Select **Default VPC**
-- Select at least **2 Availability Zones**
-  - Example:
-    - us-east-1a
-    - us-east-1b
-
----
-
-## Security Groups
-
-Select:
-```text
-nautilus-sg
-```
-
----
-
-## Listeners and Routing
-
-| Setting | Value |
-|---|---|
-| Protocol | HTTP |
-| Port | 80 |
-| Forward to | nautilus-tg |
-
-Click:
-```text
-Create Load Balancer
-```
-
-
-⏳ Wait until ALB state becomes **Active**
+1. Navigate to **EC2** → **Instances**
+2. Select `nautilus-ec2` instance
+3. Click **Security** tab → Click security group link
+4. **Edit inbound rules:**
+   - Add rule:
+     - **Type:** HTTP
+     - **Protocol:** TCP
+     - **Port:** 80
+     - **Source:** 
+       - Select **Custom**
+       - Enter the security group ID of `nautilus-sg` (e.g., `sg-xxxxxxxxx`)
+       - *This allows traffic only from the ALB security group*
+   - Alternatively, you can allow traffic from the ALB's VPC CIDR block
 
 ---
 
-# 🔓 Step 5 — Update EC2 Security Group (IMPORTANT)
+## Step 6: Verify Configuration
 
-The EC2 instance must allow traffic from the ALB.
-
-## Navigate:
-```text
-EC2 → Instances → nautilus-ec2
-```
-
-Open attached **Security Group**.
-
-### Edit Inbound Rules
-
-Add rule:
-
-| Type | Protocol | Port | Source |
-|---|---|---|---|
-| HTTP | TCP | 80 | nautilus-sg |
-
-✅ This allows only ALB traffic.
-
-Save rules.
+1. Wait for ALB provisioning to complete (provisioning state becomes **Active**)
+2. Copy the **DNS name** of `nautilus-alb` (e.g., `nautilus-alb-1234567890.us-east-1.elb.amazonaws.com`)
+3. Test by accessing the DNS name in a web browser
+4. You should see the Nginx default page or sample application page
 
 ---
 
-# 🩺 Step 6 — Verify Target Health
+## Verification Commands (Optional)
 
-Navigate:
-```text
-EC2 → Target Groups → nautilus-tg → Targets
-```
+```bash
+# Test ALB DNS endpoint
+curl http://nautilus-alb-1234567890.us-east-1.elb.amazonaws.com
 
-Wait until:
-```text
-Health Status = healthy
-```
-
-(Health checks may take 1–2 minutes.
-
----
-
-# 🌐 Step 7 — Test Load Balancer
-
-1. Go to:
-```text
-EC2 → Load Balancers
-```
-
-2. Select:
-```text
-nautilus-alb
-```
-
-3. Copy **DNS Name**
-
-Example:
-```text
-http://nautilus-alb-123456.us-east-1.elb.amazonaws.com
-```
-
-4. Open in browser.
-
-✅ Expected Result:
-```text
-Nginx default page loads
-```
-
----
-
-# ✅ Final Architecture
-```text
-Internet
-│
-▼
-Application Load Balancer (nautilus-alb)
-│ Port 80
-▼
-Target Group (nautilus-tg)
-│
-▼
-EC2 Instance (nautilus-ec2 : Nginx)
-```
-
----
-
-# ✔️ Verification Checklist
-
-| Requirement | Status |
-|---|---|
-| ALB created | ✅ |
-| Name nautilus-alb | ✅ |
-| Target group created | ✅ |
-| Name nautilus-tg | ✅ |
-| Security group nautilus-sg | ✅ |
-| Port 80 public access | ✅ |
-| SG attached to ALB | ✅ |
-| Traffic routed to EC2 | ✅ |
-| EC2 allows ALB traffic | ✅ |
-| Target healthy | ✅ |
-
----
-
-## 🎉 Task Completed Successfully
-Application Load Balancer is now routing traffic to the Nginx EC2 instance.
-  
+# Check target health
+aws elbv2 describe-target-health --target-group-arn <target-group-arn> --region us-east-1
