@@ -150,3 +150,55 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=xfusion-ec2" --region
 ## 🎉 Task Completed Successfully
 
 Your EC2 instance is now actively monitored, and alerts will be sent automatically when CPU usage exceeds the defined threshold.
+```
+
+### 4.2 Verify CloudWatch Alarm
+```bash
+# 📊 Check alarm status
+aws cloudwatch describe-alarms --alarm-names xfusion-alarm --region us-east-1
+```
+
+---
+
+### 4.3 Check in Console
+- EC2: Verify xfusion-ec2 is in Running state
+- CloudWatch: Verify xfusion-alarm shows OK or INSUFFICIENT_DATA initially
+
+---
+
+## 🧪 Step 5: Test the Alarm (Optional)
+
+### 5.1 Generate CPU Load
+1. SSH into the EC2 instance:
+```bash
+ssh -i <key-pair.pem> ubuntu@<public-ip>
+```
+
+2. Generate CPU stress:
+```bash
+# Install stress tool
+sudo apt update
+sudo apt install stress -y
+
+# Generate CPU load (90%+)
+stress --cpu 2 --timeout 600
+```
+
+---
+
+### 5.2 Monitor Alarm
+1. ⏳ Wait 5-10 minutes
+2. 📊 Alarm state should change from OK → ALARM
+3. 📧 Notification should be sent to xfusion-sns-topic
+
+---
+
+## 🎯 Final Verification Checklist
+- 🖥️ EC2 instance xfusion-ec2 is running
+- 🌐 Instance has public IP assigned
+- 🔒 Security group allows SSH access
+- 📊 CloudWatch alarm xfusion-alarm created
+- ⚙️ Alarm configured with correct metric and threshold
+- 🔔 SNS topic xfusion-sns-topic selected for notifications
+- ✅ Alarm status shows OK or INSUFFICIENT_DATA
+
