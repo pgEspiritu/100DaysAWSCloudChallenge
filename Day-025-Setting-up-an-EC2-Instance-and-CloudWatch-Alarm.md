@@ -51,8 +51,15 @@ EC2 → Instances → Launch Instance
 
 ## Network Settings
 
-- Allow SSH (optional)
-- Default VPC and Subnet
+- Click **Edit**
+- **VPC:** Select default VPC
+- **Subnet:** Choose any availability zone
+- **🛡️ Auto-assign public IP:** Enable
+- **🔒 Firewall (security groups):** 
+  - Select **Create security group**
+  - **Security group name:** `xfusion-ec2-sg`
+  - **Description:** `Security group for xfusion-ec2`
+  - **Inbound rules:** Add SSH (port 22) from My IP or 0.0.0.0/0
 
 ---
 
