@@ -175,7 +175,7 @@ Check:
 ---
 
 # ✅ Final Architecture
-```mermaid
+```text
 EC2 Instance (xfusion-ec2)
 │
 │ CPU Utilization Metric
