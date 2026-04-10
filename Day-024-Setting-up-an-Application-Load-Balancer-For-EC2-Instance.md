@@ -1,3 +1,69 @@
+# 🚀 AWS DevOps Task: Application Load Balancer Setup
+
+## 📌 Overview
+The Nautilus DevOps team is currently working on setting up a simple application on the AWS cloud.
+
+They aim to establish an **Application Load Balancer (ALB)** in front of an EC2 instance where an **Nginx server** is currently running.
+
+> 📝 Note: The Nginx server currently serves a sample page, but the team plans to deploy the actual application later.
+
+---
+
+## 🎯 Objectives
+
+Perform the following tasks:
+
+- Create an **Application Load Balancer** named `xfusion-alb`
+- Create a **Target Group** named `xfusion-tg`
+- Create a **Security Group** named `xfusion-sg`
+  - Allow **HTTP (Port 80)** access from the public
+- Attach the security group to the ALB
+- Configure routing:
+  - ALB (Port 80) → EC2 instance `xfusion-ec2` (Port 80)
+- Update the default security group attached to the EC2 instance if necessary
+
+---
+
+## 🌐 AWS Credentials
+
+Use the following credentials to access the AWS Console:
+
+- **Console URL:**  
+  https://433114257483.signin.aws.amazon.com/console?region=us-east-1  
+
+- **Username:** `kk_labs_user_329127`  
+- **Password:** `5QWHxA6v@O@%`  
+
+---
+
+## ⏱️ Session Details
+
+- **Start Time:** Wed Mar 25 23:15:47 UTC 2026  
+- **End Time:** Thu Mar 26 00:15:47 UTC 2026  
+
+---
+
+## ⚙️ Important Notes
+
+- Create all resources in the **`us-east-1` region**
+- To retrieve credentials via CLI:
+
+```bash
+showcreds
+```
+To display or hide the AWS client terminal, use the expand toggle button
+
+---
+
+## 🏗️ Architecture Overview
+```text
+User → Application Load Balancer (Port 80)
+     → Target Group (xfusion-tg)
+     → EC2 Instance (xfusion-ec2 running Nginx on Port 80)
+```
+
+---
+
 # 🚀 Steps to Configure Application Load Balancer (ALB) on AWS
 
 ## 📋 Prerequisites
