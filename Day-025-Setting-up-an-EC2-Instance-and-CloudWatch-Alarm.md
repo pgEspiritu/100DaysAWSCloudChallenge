@@ -176,16 +176,18 @@ Check:
 
 # ✅ Final Architecture
 ```mermaid
-
-Check:
-
-- Alarm name: `xfusion-alarm`
-- State: **OK** (initially)
-- Metric: CPUUtilization
-
----
-
-# ✅ Final Architecture
+EC2 Instance (xfusion-ec2)
+│
+│ CPU Utilization Metric
+▼
+CloudWatch Alarm (xfusion-alarm)
+│
+│ ≥ 90% for 5 min
+▼
+SNS Topic (xfusion-sns-topic)
+│
+▼
+Notification Sent
 ```
 
 ---
