@@ -53,6 +53,8 @@ Expected output includes:
 nautilus-sync-13717
 ```
 
+![Day 23.1](images/Day-023.1.png)
+
 ---
 
 # 🔒 Step 3 — Ensure Bucket is Private (Default)
@@ -80,6 +82,9 @@ aws s3 sync s3://nautilus-s3-17149 s3://nautilus-sync-13717
 - Skips unchanged files
 - Ensures efficient transfer
 
+![Day 23.2](images/Day-023.2.png)
+![Day 23.3](images/Day-023.3.png)
+
 ---
 
 # 📊 Step 5 — Verify Data Consistency
@@ -88,6 +93,7 @@ aws s3 sync s3://nautilus-s3-17149 s3://nautilus-sync-13717
 ```bash
 aws s3 ls s3://nautilus-s3-17149 --recursive --summarize
 ```
+![Day 23.4](images/Day-023.4.png)
 
 Look for:
 ```bash
@@ -95,16 +101,22 @@ Total Objects:
 Total Size:
 ```
 
+![Day 23.5](images/Day-023.5.png)
+
 ## 5.2 Count Files in Destination Bucket
 ```bash
 aws s3 ls s3://nautilus-sync-13717 --recursive --summarize
 ```
+
+![Day 23.6](images/Day-023.6.png)
 
 ✅ Both must match:
 ```bash
 Total Objects
 Total Size
 ```
+
+![Day 23.7](images/Day-023.7.png)
 
 ---
 
@@ -114,6 +126,8 @@ Run sync in dry-run mode:
 ```bash
 aws s3 sync s3://nautilus-s3-17149 s3://nautilus-sync-13717 --dryrun
 ```
+
+![Day 23.8](images/Day-023.8.png)
 
 ✅ Expected result:
 ```bash
