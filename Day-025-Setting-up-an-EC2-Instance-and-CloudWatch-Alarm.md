@@ -20,37 +20,46 @@ Set up monitoring for an EC2 instance with the following:
 
 ---
 
-# 🧭 Step 1 — Login to AWS Console
+# 🚀 Steps to Create EC2 Instance & CloudWatch Alarm on AWS
 
-1. Open the provided **Console URL**
-2. Login using credentials
-3. Set region:
-```text
-us-east-1 (N. Virginia)
-```
+## 📋 Prerequisites
+- ✅ Access to AWS Console with provided credentials
+- 🌎 Region set to `us-east-1`
+- 📢 SNS topic named `xfusion-sns-topic` already created
 
 ---
 
-# 🖥️ Step 2 — Launch EC2 Instance
+## 🔐 Step 1: Login to AWS Console
 
-## Navigate:
-```text
-EC2 → Instances → Launch Instance
-```
-
-### Configure:
-
-| Setting | Value |
-|---|---|
-| Name | xfusion-ec2 |
-| AMI | Ubuntu Server |
-| Instance Type | t2.micro |
-| Key Pair | Optional (Proceed without if allowed) |
+1. 🌐 Navigate to: `https://252520751240.signin.aws.amazon.com/console?region=us-east-1`
+2. 👤 Login with credentials:
+   - **Username:** `kk_labs_user_369138`
+   - **🔑 Password:** `3wL1XA6mgKn8`
 
 ---
 
-## Network Settings
+## 🖥️ Step 2: Launch EC2 Instance (xfusion-ec2)
 
+### 2.1 Navigate to EC2 Dashboard
+1. 🎯 From AWS Console, search for **EC2** in the top search bar
+2. Click on **EC2** to open the dashboard
+
+### 2.2 Launch Instance
+1. ✅ Click **Launch Instance** button
+2. ⚙️ Configure the instance:
+
+#### 📝 **Name and tags:**
+- **🏷️ Name:** `xfusion-ec2`
+
+#### 🖼️ **Application and OS Images (Amazon Machine Image - AMI):**
+- Choose **Ubuntu** (e.g., Ubuntu Server 22.04 LTS or 24.04 LTS)
+- **Architecture:** 64-bit (x86)
+
+#### 🔑 **Key pair (login):**
+- Select **Proceed without a key pair** (for lab purposes)
+- ⚠️ *Note: Not recommended for production*
+
+#### 🌐 **Network settings:**
 - Click **Edit**
 - **VPC:** Select default VPC
 - **Subnet:** Choose any availability zone
@@ -61,168 +70,80 @@ EC2 → Instances → Launch Instance
   - **Description:** `Security group for xfusion-ec2`
   - **Inbound rules:** Add SSH (port 22) from My IP or 0.0.0.0/0
 
----
+#### 💾 **Configure storage:**
+- **Root volume:** 20 GB gp2 or gp3 (default is fine)
 
-Click:
-```text
-Launch Instance
-```
+#### 📊 **Advanced details (optional):**
+- Keep defaults
 
----
-
-## ✅ Verify Instance
-
-Go to:
-```text
-EC2 → Instances
-```
-
-Ensure:
-
-- State: **Running**
-- Status Checks: **2/2 passed**
+### 2.3 Launch Instance
+1. 📝 Review all settings
+2. ✅ Click **Launch instance**
+3. ⏳ Wait for instance to show **Running** state
 
 ---
 
-# 📊 Step 3 — Create CloudWatch Alarm
+## 📢 Step 3: Create CloudWatch Alarm (xfusion-alarm)
 
-## Navigate:
-```text
-CloudWatch → Alarms → Create Alarm
-```
+### 3.1 Navigate to CloudWatch
+1. 🎯 From AWS Console, search for **CloudWatch**
+2. Click on **CloudWatch** to open the dashboard
 
----
+### 3.2 Create Alarm
+1. 📊 In left sidebar, click **Alarms** → **All alarms**
+2. ✅ Click **Create alarm** button
 
-## Step 3.1 — Select Metric
+### 3.3 Select Metric
+1. 🔘 Click **Select metric**
+2. 📁 Navigate through:
+   - **EC2** → **Per-Instance Metrics**
+3. 🔍 Search for instance with `xfusion-ec2` (or find by InstanceId)
+4. ✅ Check the box for **CPUUtilization** metric
+5. ✅ Click **Select metric**
 
-1. Click:
-```text
-Select metric
-```
+### 3.4 Configure Alarm Conditions
+1. ⚙️ **Specify metric and conditions:**
+   - **Statistic:** `Average`
+   - **Period:** `5 minutes`
+   
+2. 📊 **Conditions:**
+   - **Threshold type:** Static
+   - **Whenever CPUUtilization is:** `Greater/Equal than threshold`
+   - **Define the alarm condition:** `90` percent
 
-2. Navigate:
-```text
-EC2 → Per-Instance Metrics
-```
+3. 📈 **Additional configuration:**
+   - **Datapoints to alarm:** `1 out of 1` (for 1 consecutive 5-minute period)
 
-3. Select:
-```text
-CPUUtilization (for xfusion-ec2)
-```
+4. ✅ Click **Next**
 
-Click:
-```text
-Select metric
-```
+### 3.5 Configure Actions
+1. 🔔 **Alarm state trigger:**
+   - Select **In alarm**
+   
+2. 📧 **Send notification to the following SNS topic:**
+   - Select **Select an existing SNS topic**
+   - **Send a notification to:** Choose `xfusion-sns-topic`
+   - *💡 If not showing, refresh or ensure SNS topic exists*
 
----
+3. ✅ Click **Next**
 
-## Step 3.2 — Configure Metric
+### 3.6 Add Name and Description
+1. 🏷️ **Alarm name:** `xfusion-alarm`
+2. 📝 **Alarm description:** `Alarm when CPU utilization exceeds 90% for 1 consecutive 5-minute period`
+3. ✅ Click **Next**
 
-| Setting | Value |
-|---|---|
-| Statistic | Average |
-| Period | 5 minutes |
-
----
-
-## Step 3.3 — Set Threshold
-
-| Setting | Value |
-|---|---|
-| Threshold type | Static |
-| Condition | Greater/Equal |
-| Value | 90 |
-
-This means:
-```text
-CPU ≥ 90% for 5 minutes
-```
+### 3.7 Preview and Create
+1. 👁️ Review all alarm configuration
+2. ✅ Click **Create alarm**
 
 ---
 
-## Step 3.4 — Configure Alarm Actions
+## ✅ Step 4: Verify Configuration
 
-1. Under **Alarm state trigger**:
-   - Select: **In alarm**
-
-2. Choose SNS topic:
-```text
-xfusion-sns-topic
-```
-
----
-
-## Step 3.5 — Configure Alarm Name
-
-| Field | Value |
-|---|---|
-| Alarm name | xfusion-alarm |
-
-Click:
-```text
-Create alarm
-```
-
----
-
-# 🩺 Step 4 — Verify Alarm
-
-Go to:
-```text
-CloudWatch → Alarms
-```
-
-Check:
-
-- Alarm name: `xfusion-alarm`
-- State: **OK** (initially)
-- Metric: CPUUtilization
-
----
-
-# ✅ Final Architecture
-```text
-EC2 Instance (xfusion-ec2)
-│
-│ CPU Utilization Metric
-▼
-CloudWatch Alarm (xfusion-alarm)
-│
-│ ≥ 90% for 5 min
-▼
-SNS Topic (xfusion-sns-topic)
-│
-▼
-Notification Sent
-```
-
----
-
-# ✔️ Verification Checklist
-
-| Requirement | Status |
-|---|---|
-| EC2 instance created | ✅ |
-| Name xfusion-ec2 | ✅ |
-| Ubuntu AMI used | ✅ |
-| Alarm created | ✅ |
-| Name xfusion-alarm | ✅ |
-| Metric CPU Utilization | ✅ |
-| Threshold ≥ 90% | ✅ |
-| Period 5 minutes | ✅ |
-| SNS topic attached | ✅ |
-| Region us-east-1 | ✅ |
-
----
-
-# 💡 Key Concept
-
-## CloudWatch Alarm Logic
-```text
-IF CPU ≥ 90% for 1 datapoint (5 mins)
-THEN trigger alarm → send SNS notification
-```
+### 4.1 Verify EC2 Instance
+```bash
+# 🖥️ Check instance status
+aws ec2 describe-instances --filters "Name=tag:Name,Values=xfusion-ec2" --region us-east-1
 
 ---
 
