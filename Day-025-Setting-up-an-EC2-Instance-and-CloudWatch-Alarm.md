@@ -46,6 +46,8 @@ Set up monitoring for an EC2 instance with the following:
 
 ### 2.2 Launch Instance
 1. ✅ Click **Launch Instance** button
+![Day 25.1](images/Day-025.1.png)
+
 2. ⚙️ Configure the instance:
 
 #### 📝 **Name and tags:**
@@ -54,10 +56,13 @@ Set up monitoring for an EC2 instance with the following:
 #### 🖼️ **Application and OS Images (Amazon Machine Image - AMI):**
 - Choose **Ubuntu** (e.g., Ubuntu Server 22.04 LTS or 24.04 LTS)
 - **Architecture:** 64-bit (x86)
+- Instance Type: **T2 Micro**
+![Day 25.2](images/Day-025.2.png)
 
 #### 🔑 **Key pair (login):**
 - Select **Proceed without a key pair** (for lab purposes)
 - ⚠️ *Note: Not recommended for production*
+![Day 25.3](images/Day-025.3.png)
 
 #### 🌐 **Network settings:**
 - Click **Edit**
@@ -69,6 +74,8 @@ Set up monitoring for an EC2 instance with the following:
   - **Security group name:** `xfusion-ec2-sg`
   - **Description:** `Security group for xfusion-ec2`
   - **Inbound rules:** Add SSH (port 22) from My IP or 0.0.0.0/0
+![Day 25.5](images/Day-025.5.png)
+![Day 25.6](images/Day-025.6.png)
 
 #### 💾 **Configure storage:**
 - **Root volume:** 20 GB gp2 or gp3 (default is fine)
@@ -80,6 +87,7 @@ Set up monitoring for an EC2 instance with the following:
 1. 📝 Review all settings
 2. ✅ Click **Launch instance**
 3. ⏳ Wait for instance to show **Running** state
+![Day 25.7](images/Day-025.7.png)
 
 ---
 
@@ -92,27 +100,38 @@ Set up monitoring for an EC2 instance with the following:
 ### 3.2 Create Alarm
 1. 📊 In left sidebar, click **Alarms** → **All alarms**
 2. ✅ Click **Create alarm** button
+![Day 25.9](images/Day-025.9.png)
+![Day 25.10](images/Day-025.10.png)
 
 ### 3.3 Select Metric
 1. 🔘 Click **Select metric**
+![Day 25.11](images/Day-025.11.png)
+
 2. 📁 Navigate through:
    - **EC2** → **Per-Instance Metrics**
+![Day 25.12](images/Day-025.12.png)
+![Day 25.13](images/Day-025.13.png)
+
 3. 🔍 Search for instance with `xfusion-ec2` (or find by InstanceId)
 4. ✅ Check the box for **CPUUtilization** metric
 5. ✅ Click **Select metric**
+![Day 25.14](images/Day-025.14.png)
 
 ### 3.4 Configure Alarm Conditions
 1. ⚙️ **Specify metric and conditions:**
    - **Statistic:** `Average`
    - **Period:** `5 minutes`
-   
+![Day 25.15](images/Day-025.15.png)   
+
 2. 📊 **Conditions:**
    - **Threshold type:** Static
    - **Whenever CPUUtilization is:** `Greater/Equal than threshold`
    - **Define the alarm condition:** `90` percent
+![Day 25.16](images/Day-025.16.png)   
 
 3. 📈 **Additional configuration:**
    - **Datapoints to alarm:** `1 out of 1` (for 1 consecutive 5-minute period)
+![Day 25.17](images/Day-025.17.png)   
 
 4. ✅ Click **Next**
 
@@ -124,17 +143,21 @@ Set up monitoring for an EC2 instance with the following:
    - Select **Select an existing SNS topic**
    - **Send a notification to:** Choose `xfusion-sns-topic`
    - *💡 If not showing, refresh or ensure SNS topic exists*
+![Day 25.18](images/Day-025.18.png)
 
 3. ✅ Click **Next**
 
 ### 3.6 Add Name and Description
 1. 🏷️ **Alarm name:** `xfusion-alarm`
+![Day 25.19](images/Day-025.19.png)
+
 2. 📝 **Alarm description:** `Alarm when CPU utilization exceeds 90% for 1 consecutive 5-minute period`
 3. ✅ Click **Next**
 
 ### 3.7 Preview and Create
 1. 👁️ Review all alarm configuration
 2. ✅ Click **Create alarm**
+![Day 25.20](images/Day-025.20.png)
 
 ---
 
@@ -144,6 +167,13 @@ Set up monitoring for an EC2 instance with the following:
 ```bash
 # 🖥️ Check instance status
 aws ec2 describe-instances --filters "Name=tag:Name,Values=xfusion-ec2" --region us-east-1
+```
+![Day 25.21](images/Day-025.21.png)
+![Day 25.22](images/Day-025.22.png)
+![Day 25.23](images/Day-025.23.png)
+![Day 25.24](images/Day-025.24.png)
+![Day 25.25](images/Day-025.25.png)
+
 
 ---
 
@@ -157,12 +187,16 @@ Your EC2 instance is now actively monitored, and alerts will be sent automatical
 # 📊 Check alarm status
 aws cloudwatch describe-alarms --alarm-names xfusion-alarm --region us-east-1
 ```
+![Day 25.26](images/Day-025.26.png)
+![Day 25.27](images/Day-025.27.png)
 
 ---
 
 ### 4.3 Check in Console
 - EC2: Verify xfusion-ec2 is in Running state
 - CloudWatch: Verify xfusion-alarm shows OK or INSUFFICIENT_DATA initially
+![Day 25.28](images/Day-025.28.png)
+![Day 25.29](images/Day-025.29.png)
 
 ---
 
