@@ -142,6 +142,8 @@ systemctl enable nginx
 1. 🖥️ Select the datacenter-ec2 instance
 2. 📋 Copy the Public IPv4 address from the details tab
   - Example: 54.123.45.67
+3. or Copy the public DNS
+ - Example: ec2-100-55-134-103.compute-1.amazonaws.com
 
 ### 4.2 Test via Web Browser
 1. 🌐 Open a new browser tab
