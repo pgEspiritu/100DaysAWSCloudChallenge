@@ -85,61 +85,94 @@ User → Application Load Balancer (Port 80)
 ## 🛡️ Step 2: Create Security Group for ALB
 
 1. 🎯 Navigate to **VPC** → **Security Groups** → **Create security group**
-2. ⚙️ Configure:
+![Day 24.1](images/Day-024.1.png)
+![Day 24.2](images/Day-024.2.png)
+
+3. ⚙️ Configure:
    - **🏷️ Security group name:** `nautilus-sg`
    - **📝 Description:** `Security group for ALB - port 80 public access`
    - **🌐 VPC:** Select default VPC
-3. **📥 Inbound rules:**
+![Day 24.3](images/Day-024.3.png)
+
+4. **📥 Inbound rules:**
    - **🔌 Type:** HTTP
    - **📡 Protocol:** TCP
    - **🔢 Port range:** 80
    - **🌍 Source:** 0.0.0.0/0 (Anywhere-IPv4)
-4. **📤 Outbound rules:** Keep default (all traffic allowed)
-5. ✅ Click **Create security group**
+![Day 24.4](images/Day-024.4.png)
+
+5. **📤 Outbound rules:** Keep default (all traffic allowed)
+6. ✅ Click **Create security group**
+![Day 24.5](images/Day-024.5.png)
 
 ---
 
 ## 🎯 Step 3: Create Target Group
 
 1. 🎯 Navigate to **EC2** → **Target Groups** → **Create target group**
-2. ⚙️ **Basic configuration:**
+![Day 24.6](images/Day-024.6.png)
+![Day 24.7](images/Day-024.7.png)
+
+3. ⚙️ **Basic configuration:**
    - **🖱️ Choose target type:** Instances
    - **🏷️ Target group name:** `nautilus-tg`
    - **🔌 Protocol:** HTTP
    - **🔢 Port:** 80
    - **🌐 VPC:** Select default VPC
    - **📦 Protocol version:** HTTP1
-3. ❤️ **Health checks:**
+![Day 24.8](images/Day-024.8.png)
+![Day 24.9](images/Day-024.9.png)
+
+4. ❤️ **Health checks:**
    - **🔌 Health check protocol:** HTTP
    - **📁 Health check path:** /
    - **⚙️ Advanced health check settings:** Keep defaults
-4. ⏩ Click **Next**
-5. **📋 Register targets:**
+![Day 24.10](images/Day-024.10.png)
+
+5. ⏩ Click **Next**
+![Day 24.11](images/Day-024.11.png)
+
+6. **📋 Register targets:**
    - ✅ Select the `nautilus-ec2` instance
    - ➕ Click **Include as pending below**
    - ✅ Click **Create target group**
+![Day 24.12](images/Day-024.12.png)
+![Day 24.13](images/Day-024.13.png)
+![Day 24.14](images/Day-024.14.png)
 
 ---
 
 ## ⚖️ Step 4: Create Application Load Balancer
 
 1. 🎯 Navigate to **EC2** → **Load Balancers** → **Create Load Balancer**
+![Day 24.15](images/Day-024.15.png)
+![Day 24.16](images/Day-024.16.png)
+
 2. 🏗️ Select **Application Load Balancer**
-3. ⚙️ **Basic configuration:**
+![Day 24.17](images/Day-024.17.png)
+
+4. ⚙️ **Basic configuration:**
    - **🏷️ Load balancer name:** `nautilus-alb`
    - **🌍 Scheme:** Internet-facing
    - **🔢 IP address type:** IPv4
-4. 🌐 **Network mapping:**
+![Day 24.18](images/Day-024.18.png)
+
+5. 🌐 **Network mapping:**
    - **VPC:** Select default VPC
    - **📍 Mappings:** Select at least two availability zones with subnets
-5. 🛡️ **Security groups:**
+![Day 24.19](images/Day-024.19.png)
+
+6. 🛡️ **Security groups:**
    - ❌ Remove default security group
    - ✅ Select `nautilus-sg` (created in Step 2)
-6. 🎧 **Listeners and routing:**
+7. 🎧 **Listeners and routing:**
    - **🔌 Protocol:** HTTP
    - **🔢 Port:** 80
    - **➡️ Default action:** Forward to `nautilus-tg`
-7. ✅ Click **Create load balancer**
+![Day 24.20](images/Day-024.20.png)
+
+8. ✅ Click **Create load balancer**
+![Day 24.21](images/Day-024.21.png)
 
 ---
 
@@ -148,7 +181,11 @@ User → Application Load Balancer (Port 80)
 1. 🖥️ Navigate to **EC2** → **Instances**
 2. ✅ Select `nautilus-ec2` instance
 3. 🔒 Click **Security** tab → Click security group link
-4. ✏️ **Edit inbound rules:**
+![Day 24.22](images/Day-024.22.png)
+
+5. ✏️ **Edit inbound rules:**
+![Day 24.23](images/Day-024.23.png)
+
    - ➕ Add rule:
      - **🔌 Type:** HTTP
      - **📡 Protocol:** TCP
@@ -158,6 +195,7 @@ User → Application Load Balancer (Port 80)
        - Enter the security group ID of `nautilus-sg` (e.g., `sg-xxxxxxxxx`)
        - *🔐 This allows traffic only from the ALB security group*
    - 💡 Alternatively, you can allow traffic from the ALB's VPC CIDR block
+![Day 24.24](images/Day-024.24.png)
 
 ---
 
@@ -165,8 +203,11 @@ User → Application Load Balancer (Port 80)
 
 1. ⏳ Wait for ALB provisioning to complete (provisioning state becomes **Active**)
 2. 📋 Copy the **DNS name** of `nautilus-alb` (e.g., `nautilus-alb-1234567890.us-east-1.elb.amazonaws.com`)
-3. 🧪 Test by accessing the DNS name in a web browser
-4. 🎉 You should see the Nginx default page or sample application page
+![Day 24.25](images/Day-024.25.png)
+
+4. 🧪 Test by accessing the DNS name in a web browser
+5. 🎉 You should see the Nginx default page or sample application page
+![Day 24.26](images/Day-024.26.png)
 
 ---
 
@@ -178,3 +219,5 @@ curl http://nautilus-alb-1150587295.us-east-1.elb.amazonaws.com
 
 # 📊 Check target health
 aws elbv2 describe-target-health --target-group-arn <target-group-arn> --region us-east-1
+```
+![Day 24.27](images/Day-024.27.png)
