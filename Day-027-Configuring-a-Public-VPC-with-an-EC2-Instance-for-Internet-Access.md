@@ -252,6 +252,11 @@ ssh ubuntu@<PUBLIC-IP>
 ```
 (or ec2-user depending on AMI)
 
+-> 
+```bash
+ssh ubumtu@34.201.28.174
+```
+
 ---
 
 # 🏁 Final Architecture
