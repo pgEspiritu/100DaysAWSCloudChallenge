@@ -109,40 +109,55 @@ Create Internet Gateway
 
 ---
 
-## 🛣️ Step 6 — Configure Route Table & Associate Subnet
-
 ## Attach to VPC
 
-1. 📋 Select the internet gateway devops-pub-igw
-2. ✅ Click Actions → Attach to VPC
-3. 🔗 Available VPCs: Select devops-pub-vpc
-4. ✅ Click Attach internet gateway
+1. Select IGW
+2. Click:
+```text
+Actions → Attach to VPC
+```
+
+3. Choose:
+```text
+devops-pub-vpc
+```
 
 ---
 
-## Create Route Table
+# 🛣️ Step 6 — Configure Route Table
 
-1. 🗺️ In VPC Dashboard, click Route Tables in left sidebar
-2. ✅ Click Create route table
-3. 🏷️ Name: devops-pub-rt
-4. 🧩 VPC: Select devops-pub-vpc
-5. ✅ Click Create route table
+## Navigate:
+```text
+VPC → Route Tables
+```
+
+1. Find route table linked to your VPC
+2. Click → Edit routes
+
+Add:
+
+| Destination | Target |
+|------------|--------|
+| 0.0.0.0/0 | Internet Gateway |
+
+Save.
 
 ---
-
-## Add Route to Internet Gateway
-- 📋 Select the route table devops-pub-rt
-- 📊 Click Routes tab → Edit routes
-- ✅ Click Add route
-- 🌐 Destination: 0.0.0.0/0
-- 🎯 Target: Select Internet Gateway → devops-pub-igw
-- ✅ Click Save changes
 
 ## Associate Subnet
-- 🔗 Click Subnet associations tab
-- ✅ Click Edit subnet associations
-- ✅ Select devops-pub-subnet
-- ✅ Click Save associations
+
+1. Go to **Subnet associations**
+2. Click:
+```text
+Edit associations
+```
+
+3. Select:
+```text
+devops-pub-subnet
+```
+
+save
 
 ---
 
