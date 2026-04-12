@@ -254,7 +254,7 @@ ssh ubuntu@<PUBLIC-IP>
 
 -> 
 ```bash
-ssh ubumtu@34.201.28.174
+ssh ubuntu@34.201.28.174
 ```
 
 ---
