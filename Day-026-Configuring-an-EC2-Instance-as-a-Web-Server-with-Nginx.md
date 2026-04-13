@@ -40,6 +40,8 @@ Create an EC2 instance configured as a **web server** using **Nginx**, with the 
 2. Click on **EC2** to open the dashboard
 3. ✅ Click **Launch Instance** button
 
+![Day 26.1](images/Day-026.1.png)
+
 ### 2.2 Configure Instance Details
 
 #### 📝 **Name and tags:**
@@ -50,9 +52,13 @@ Create an EC2 instance configured as a **web server** using **Nginx**, with the 
 - Choose **Ubuntu** (Recommended: Ubuntu Server 22.04 LTS or 24.04 LTS)
 - **Architecture:** 64-bit (x86)
 
+![Day 26.2](images/Day-026.2.png)
+
 #### 🔑 **Key pair (login):**
 - Select **Proceed without a key pair** (for lab purposes)
 - ⚠️ *Note: Not recommended for production environments*
+
+![Day 26.3](images/Day-026.3.png)
 
 #### 🌐 **Network settings:**
 - Click **Edit**
@@ -63,12 +69,16 @@ Create an EC2 instance configured as a **web server** using **Nginx**, with the 
   - Select **Create security group**
   - **Security group name:** `datacenter-ec2-sg`
   - **Description:** `Security group for datacenter-ec2 allowing HTTP traffic`
-  
+
+![Day 26.4](images/Day-026.4.png)
+
   **Inbound security group rules:**
   - Click **Add security group rule**
   - **Type:** HTTP
   - **Source:** Anywhere-IPv4 (0.0.0.0/0)
   - *Optional: Add SSH rule for debugging (Type: SSH, Source: My IP)*
+
+![Day 26.5](images/Day-026.5.png)
 
 #### 💾 **Configure storage:**
 - **Root volume:** 
@@ -120,6 +130,8 @@ systemctl start nginx
 systemctl enable nginx
 ```
 
+![Day 26.6](images/Day-026.6.png)
+
 ### 2.4 Review and Launch
 1. 👁️ Review all configuration settings:
  - ✅ Instance name: datacenter-ec2
@@ -135,6 +147,8 @@ systemctl enable nginx
 - ⏱️ Wait for instance state to change from Pending to Running
 - ✅ Check Status checks column - should show 2/2 checks passed
 
+![Day 26.7](images/Day-026.7.png)
+
 ---
 
 ## 🌐 Step 4: Test the Nginx Web Server
@@ -145,11 +159,15 @@ systemctl enable nginx
 3. or Copy the public DNS
  - Example: ec2-100-55-134-103.compute-1.amazonaws.com
 
+![Day 26.8](images/Day-026.8.png)
+
 ### 4.2 Test via Web Browser
 1. 🌐 Open a new browser tab
 2. 🔗 Enter: http://<public-ip-address>
 
 🎉 You should see the Nginx welcome page or custom HTML page
+
+![Day 26.9](images/Day-026.9.png)
 
 ---
 
@@ -162,6 +180,10 @@ curl http://<public-ip-address>
 curl http://54.123.45.67
 ```
 > Expected output should show HTML content or Nginx welcome page.
+
+![Day 26.10](images/Day-026.10.png)
+
+---
 
 ## 🔍 Step 5: Verify User Data Execution
 ### 5.1 Check User Data Log (If you can SSH)
