@@ -38,6 +38,8 @@ Click:
 Create repository
 ```
 
+![Day 28.1](images/Day-028.1.png)
+
 ### Configure:
 
 | Setting | Value |
@@ -49,6 +51,9 @@ Click:
 ```text
 Create repository
 ```
+
+![Day 28.2](images/Day-028.2.png)
+![Day 28.3](images/Day-028.3.png)
 
 ---
 
@@ -110,6 +115,9 @@ docker tag xfusion-ecr:latest <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/xfusi
 docker push <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/xfusion-ecr:latest
 ```
 
+![Day 28.4](images/Day-028.4.png)
+![Day 28.5](images/Day-028.5.png)
+
 ---
 
 # ✅ PART 3 — Verify in AWS Console
@@ -123,6 +131,8 @@ Check:
 
 - Image tag: `latest`
 - Image successfully pushed
+
+![Day 28.6](images/Day-028.6.png)
 
 ---
 
