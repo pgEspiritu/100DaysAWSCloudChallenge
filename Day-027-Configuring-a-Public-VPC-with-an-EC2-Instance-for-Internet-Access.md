@@ -33,6 +33,8 @@ us-east-1 (N. Virginia)
 VPC → Your VPCs → Create VPC
 ```
 
+![Day 27.1](images/Day-027.1.png)
+
 ### Configure:
 
 | Setting | Value |
@@ -40,10 +42,14 @@ VPC → Your VPCs → Create VPC
 | Name | devops-pub-vpc |
 | IPv4 CIDR | 10.0.0.0/16 |
 
+![Day 27.2](images/Day-027.2.png)
+
 Click:
 ```text
 Create VPC
 ```
+
+![Day 27.3](images/Day-027.3.png)
 
 ---
 
@@ -53,6 +59,8 @@ Create VPC
 ```text
 VPC → Subnets → Create subnet
 ```
+
+![Day 27.4](images/Day-027.4.png)
 
 ### Configure:
 
@@ -68,6 +76,9 @@ Click:
 Create subnet
 ```
 
+![Day 27.5](images/Day-027.5.png)
+![Day 27.6](images/Day-027.6.png)
+
 ---
 
 # 🌐 Step 4 — Enable Auto Public IP
@@ -82,12 +93,16 @@ devops-pub-subnet
 Actions → Edit subnet settings
 ```
 
+![Day 27.7](images/Day-027.7.png)
+
 3. Enable:
 ```text
 ✔ Auto-assign public IPv4 address
 ```
 
 Save.
+
+![Day 27.8](images/Day-027.8.png)
 
 ---
 
@@ -98,6 +113,8 @@ Save.
 VPC → Internet Gateways → Create
 ```
 
+![Day 27.9](images/Day-027.9.png)
+
 ### Configure:
 
 | Name | devops-igw |
@@ -106,6 +123,8 @@ Click:
 ```text
 Create Internet Gateway
 ```
+
+![Day 27.10](images/Day-027.10.png)
 
 ---
 
@@ -117,10 +136,14 @@ Create Internet Gateway
 Actions → Attach to VPC
 ```
 
+![Day 27.11](images/Day-027.11.png)
+
 3. Choose:
 ```text
 devops-pub-vpc
 ```
+
+![Day 27.12](images/Day-027.12.png)
 
 ---
 
@@ -134,6 +157,8 @@ VPC → Route Tables
 1. Find route table linked to your VPC
 2. Click → Edit routes
 
+![Day 27.13](images/Day-027.13.png)
+
 Add:
 
 | Destination | Target |
@@ -141,6 +166,8 @@ Add:
 | 0.0.0.0/0 | Internet Gateway |
 
 Save.
+
+![Day 27.14](images/Day-027.14.png)
 
 ---
 
@@ -152,12 +179,16 @@ Save.
 Edit associations
 ```
 
+![Day 27.15](images/Day-027.15.png)
+
 3. Select:
 ```text
 devops-pub-subnet
 ```
 
 save
+
+![Day 27.16](images/Day-027.16.png)
 
 ---
 
@@ -167,6 +198,8 @@ save
 ```text
 EC2 → Security Groups → Create
 ```
+
+![Day 27.17](images/Day-027.17.png)
 
 ### Configure:
 
@@ -181,10 +214,14 @@ EC2 → Security Groups → Create
 |---|---|---|
 | SSH | 22 | 0.0.0.0/0 |
 
+![Day 27.18](images/Day-027.18.png)
+
 Click:
 ```text
 Create security group
 ```
+
+![Day 27.19](images/Day-027.19.png)
 
 ---
 
@@ -194,6 +231,8 @@ Create security group
 ```text
 EC2 → Launch Instance
 ```
+
+![Day 27.20](images/Day-027.20.png)
 
 ---
 
@@ -205,6 +244,9 @@ EC2 → Launch Instance
 | AMI | Ubuntu (or Amazon Linux) |
 | Instance Type | t2.micro |
 
+![Day 27.21](images/Day-027.21.png)
+![Day 27.22](images/Day-027.22.png)
+
 ---
 
 ## Network Settings
@@ -215,6 +257,8 @@ EC2 → Launch Instance
 | Subnet | devops-pub-subnet |
 | Auto-assign Public IP | Enabled |
 | Security Group | devops-pub-sg |
+
+![Day 27.23](images/Day-027.23.png)
 
 ---
 
@@ -241,21 +285,7 @@ Check:
 | Public IP | Present |
 | SSH | Accessible |
 
----
-
-# 🔗 Step 10 — Test SSH Access
-
-From terminal:
-
-```bash
-ssh ubuntu@<PUBLIC-IP>
-```
-(or ec2-user depending on AMI)
-
--> 
-```bash
-ssh ubuntu@34.201.28.174
-```
+![Day 27.24](images/Day-027.24.png)
 
 ---
 
