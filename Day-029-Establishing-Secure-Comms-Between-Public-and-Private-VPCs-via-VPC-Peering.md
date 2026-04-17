@@ -158,136 +158,75 @@ If you need to SSH from public instance to private instance:
 2. 📊 Add outbound rule:
    - Type: SSH (port 22)
    - Destination: 10.1.0.0/16 (private VPC CIDR)
+3. 📊 Add inbound rule:
+   - Type: SSH (port 22)
+   - Destination: Anywhere IPV4
 
 ---
 
-## 🔑 Step 5: Configure SSH Access from AWS Client
+## 🔑 Step 5: Setup SSH Access (aws-client → Public EC2)
 
-### 5.1 Add Public Key to Public EC2 Instance
+## On aws-client
+
+### Check key:
+
 ```bash
-# First, get the public IP of xfusion-public-ec2
-PUBLIC_IP=$(aws ec2 describe-instances \
-  --filters "Name=tag:Name,Values=xfusion-public-ec2" \
-  --query "Reservations[0].Instances[0].PublicIpAddress" \
-  --output text)
-
-echo "Public EC2 IP: $PUBLIC_IP"
-
-# Copy the public key to the instance
-# Note: You need the existing key pair for the public instance
-scp -i /path/to/existing-key.pem /root/.ssh/id_rsa.pub ec2-user@$PUBLIC_IP:/tmp/
-
-# SSH into public instance
-ssh -i /path/to/existing-key.pem ec2-user@$PUBLIC_IP
-
-# Inside public EC2 instance, add the public key
-sudo mkdir -p /home/ec2-user/.ssh
-sudo cat /tmp/id_rsa.pub >> /home/ec2-user/.ssh/authorized_keys
-sudo chmod 600 /home/ec2-user/.ssh/authorized_keys
-sudo chown -R ec2-user:ec2-user /home/ec2-user/.ssh
-
-# Verify
-cat /home/ec2-user/.ssh/authorized_keys
-exit
+ls /root/.ssh/id_rsa.pub
 ```
 
-### 5.2 Test SSH from AWS Client
+If not exists:
 
 ```bash
-# Test SSH access from AWS client host
-ssh -i /root/.ssh/id_rsa ec2-user@$PUBLIC_IP
-# Should connect without password prompt
+ssh-keygen -t rsa -f /root/.ssh/id_rsa -N ""
 ```
 
----
-
-## 🧪 Step 6: Test VPC Peering Connection
-
-### 6.1 Get Private EC2 Instance IP
-
+### Copy Public Key
 ```bash
-# Get private IP of xfusion-private-ec2
-PRIVATE_IP=$(aws ec2 describe-instances \
-  --filters "Name=tag:Name,Values=xfusion-private-ec2" \
-  --query "Reservations[0].Instances[0].PrivateIpAddress" \
-  --output text)
+cat /root/.ssh/id_rsa.pub
+```
 
-echo "Private EC2 IP: $PRIVATE_IP"
+### Add to Public EC2
+1. Connect via EC2 Instance Connect
+2. Edit:
+```bash
+nano /home/ec2-user/.ssh/authorized_keys
+```
+Paste key.
+
+Fix permissions:
+```bash
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 ---
 
-### 6.2 SSH into Public EC2 Instance
+# 🔗 PART 5 — SSH into Public EC2
 
+From aws-client:
 ```bash
-# SSH from AWS client to public instance
-ssh -i /root/.ssh/id_rsa ec2-user@$PUBLIC_IP
+ssh ec2-user@<PUBLIC-EC2-IP>
 ```
 
 ---
 
-### 6.3 Test Ping from Public to Private EC2
+# 🧪 PART 6 — Test Connectivity (Public → Private EC2)
+Get Private EC2 IP
 
-```bash
-# Inside public EC2 instance, ping the private instance
-ping -c 4 $PRIVATE_IP
-
-# Expected output:
-# PING 10.1.1.x (10.1.1.x) 56(84) bytes of data.
-# 64 bytes from 10.1.1.x: icmp_seq=1 ttl=64 time=0.5 ms
-# 64 bytes from 10.1.1.x: icmp_seq=2 ttl=64 time=0.6 ms
+From AWS Console:
+```text
+devops-private-ec2 → Private IP
 ```
 
----
+### Ping Private EC2
 
-### 6.4 Test SSH from Public to Private EC2 (Optional)
-
+Inside public EC2:
 ```bash
-# If SSH is allowed, from public instance:
-ssh -i /path/to/private-key.pem ec2-user@$PRIVATE_IP
-# OR
-ssh ubuntu@$PRIVATE_IP  # if using Ubuntu AMI
+ping <PRIVATE-IP>
 ```
 
----
-
-## 📊 Step 7: Verification Commands
-
-### Check Peering Connection Status
-
-```bash
-# Describe peering connection
-aws ec2 describe-vpc-peering-connections \
-  --filters "Name=tag:Name,Values=xfusion-vpc-peering"
-
-# Check status
-aws ec2 describe-vpc-peering-connections \
-  --vpc-peering-connection-ids pcx-xxxxxxxx \
-  --query "VpcPeeringConnections[0].Status.Code"
-```
-
-### Check Routes=
-
-```bash
-# Default VPC route table
-aws ec2 describe-route-tables \
-  --filters "Name=vpc-id,Values=<default-vpc-id>" \
-  --query "RouteTables[0].Routes[?DestinationCidrBlock=='10.1.0.0/16']"
-
-# Private VPC route table
-aws ec2 describe-route-tables \
-  --filters "Name=vpc-id,Values=<private-vpc-id>" \
-  --query "RouteTables[0].Routes[?DestinationCidrBlock=='<default-vpc-cidr>']"
-```
-
-### Test Connectivity
-
-```bash
-# From public EC2, check route to private VPC
-ip route get $PRIVATE_IP
-
-# Check if peering is active
-ping -c 2 $PRIVATE_IP && echo "✅ Peering working!" || echo "❌ Peering failed"
+✅ Expected Output
+```text
+64 bytes from <PRIVATE-IP>: icmp_seq=1 ttl=...
 ```
 
 ---
