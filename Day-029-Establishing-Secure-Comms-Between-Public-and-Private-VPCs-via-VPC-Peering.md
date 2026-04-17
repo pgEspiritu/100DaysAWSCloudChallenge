@@ -113,7 +113,7 @@ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=<private-vpc-id>" "N
 2. ✅ Select the route table
 3. 📊 Click Routes tab → Edit routes
 4. ✅ Click Add route
-   - 🌐 Destination: <default-vpc-cidr> (e.g., 172.31.0.0/16)
+   - 🌐 Destination: `<default-vpc-cidr>` (e.g., 172.31.0.0/16)
    - 🎯 Target: Select Peering Connection → xfusion-vpc-peering
 5. ✅ Click Save changes
 
@@ -142,11 +142,11 @@ aws ec2 describe-route-tables --route-table-ids <private-rt-id> \
 4. 📊 Click Inbound rules tab → Edit inbound rules
 5. ✅ Add rule for ICMP (ping):
    - Type: All ICMP - IPv4
-   - Source: <default-vpc-cidr> (e.g., 172.31.0.0/16)
+   - Source: `<default-vpc-cidr>`  (e.g., 172.31.0.0/16)
    - Description: Allow ping from default VPC
 6. (Optional) Add rule for SSH if needed:
    - Type: SSH
-   - Source: <default-vpc-cidr>
+   - Source: `<default-vpc-cidr>` 
 7. ✅ Click Save rules
 
 ---
