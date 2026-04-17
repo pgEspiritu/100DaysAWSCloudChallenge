@@ -19,212 +19,310 @@ Enable communication between:
 
 ---
 
-# 🧭 PART 1 — Create VPC Peering Connection
+# 🔗 Steps to Configure VPC Peering for Cross-VPC Communication
 
-## Navigate:
-```text
-VPC → Peering Connections → Create Peering Connection
+## 📋 Prerequisites
+- ✅ Access to AWS Console with provided credentials
+- 🌎 Region set to `us-east-1`
+- ✅ Default VPC exists with public EC2 instance: `xfusion-public-ec2`
+- ✅ Private VPC exists: `xfusion-private-vpc` (10.1.0.0/16)
+- ✅ Private subnet exists: `xfusion-private-subnet` (10.1.1.0/24)
+- ✅ Private EC2 instance exists: `xfusion-private-ec2`
+
+---
+
+## 🔐 Step 1: Login to AWS Console
+
+1. 🌐 Navigate to: `https://658733160186.signin.aws.amazon.com/console?region=us-east-1`
+2. 👤 Login with credentials:
+   - **Username:** `kk_labs_user_971918`
+   - **🔑 Password:** `uk^CDxP9Q620`
+
+---
+
+## 🔗 Step 2: Create VPC Peering Connection
+
+### 2.1 Navigate to VPC Dashboard
+1. 🎯 From AWS Console, search for **VPC**
+2. Click on **VPC** to open the dashboard
+
+### 2.2 Create Peering Connection
+1. 📁 In left sidebar, click **Peering Connections**
+2. ✅ Click **Create Peering Connection**
+
+#### ⚙️ Configure peering:
+- **🏷️ Peering connection name tag:** `xfusion-vpc-peering`
+- **🧩 VPC (Requester):** Select the **Default VPC**
+  - *Look for VPC with "(default)" in name*
+  - *Example CIDR: 172.31.0.0/16 or 172.16.0.0/16*
+- **🧩 VPC (Accepter):** Select `xfusion-private-vpc` (10.1.0.0/16)
+- **📡 Accepter account:** My account
+
+3. ✅ Click **Create Peering Connection**
+4. 📋 Note the **Peering Connection ID** (e.g., `pcx-12345678`)
+
+### 2.3 Accept Peering Connection
+1. ✅ Select the peering connection `xfusion-vpc-peering`
+2. 🔘 Click **Actions** → **Accept request**
+3. ✅ Click **Accept request** in confirmation dialog
+4. 🎉 Status should change to `Active`
+
+---
+
+## 🗺️ Step 3: Configure Route Tables
+
+### 3.1 Identify Route Tables
+
+#### Default VPC Route Table:
+```bash
+# Find default VPC ID
+aws ec2 describe-vpcs --filters "Name=isDefault,Values=true" --query "Vpcs[0].VpcId" --output text
+
+# Find default VPC's main route table
+aws ec2 describe-route-tables --filters "Name=vpc-id,Values=<default-vpc-id>" "Name=association.main,Values=true"
 ```
 
-### Configure:
+Private VPC Route Table:
+```bash
+# Find private VPC ID
+aws ec2 describe-vpcs --filters "Name=tag:Name,Values=xfusion-private-vpc" --query "Vpcs[0].VpcId" --output text
 
-| Setting | Value |
-|---|---|
-| Name | devops-vpc-peering |
-| VPC (Requester) | Default VPC |
-| VPC (Accepter) | devops-private-vpc |
-
-Click:
-```text
-Create Peering Connection
+# Find private subnet's route table
+aws ec2 describe-route-tables --filters "Name=vpc-id,Values=<private-vpc-id>" "Name=association.subnet-id,Values=<private-subnet-id>"
 ```
 
 ---
 
-## Accept Peering
+### 3.2 Add Route to Default VPC Route Table
 
-1. Select peering connection
-2. Click:
-```text
-Actions → Accept Request
-```
-
-✅ Status should be:
-```text
-Active
-```
-
----
-
-# 🛣️ PART 2 — Update Route Tables
-
-## 📍 2.1 Public VPC Route Table
-
-Navigate:
-```text
-VPC → Route Tables → Default VPC Route Table
-```
-
-Edit routes:
-
-| Destination | Target |
-|------------|--------|
-| 10.1.0.0/16 | Peering Connection |
-
-Save.
+1. 📁 In VPC Dashboard, click Route Tables
+2. 🔍 Find the route table associated with Default VPC
+   - Look for main route table of default VPC
+4. ✅ Select the route table
+5. 📊 Click Routes tab → Edit routes
+6. ✅ Click Add route
+   - 🌐 Destination: 10.1.0.0/16 (private VPC CIDR)
+   - 🎯 Target: Select Peering Connection → xfusion-vpc-peering
+7. ✅ Click Save changes
 
 ---
 
-## 📍 2.2 Private VPC Route Table
+### 3.3 Add Route to Private VPC Route Table
 
-Navigate:
-```text
-Route table for devops-private-vpc
-```
-
-Edit routes:
-
-| Destination | Target |
-|------------|--------|
-| Default VPC CIDR (e.g., 172.31.0.0/16) | Peering Connection |
-
-Save.
+1. 🔍 Find the route table associated with Private VPC (xfusion-private-vpc)
+2. ✅ Select the route table
+3. 📊 Click Routes tab → Edit routes
+4. ✅ Click Add route
+   - 🌐 Destination: <default-vpc-cidr> (e.g., 172.31.0.0/16)
+   - 🎯 Target: Select Peering Connection → xfusion-vpc-peering
+5. ✅ Click Save changes
 
 ---
 
-# 🔐 PART 3 — Update Security Groups
-
-## 📍 3.1 Private EC2 Security Group
-
-Navigate:
-```text
-EC2 → devops-private-ec2 → Security Group
-```
-
-
-### Add Inbound Rules:
-
-| Type | Port | Source |
-|---|---|---|
-| SSH | 22 | Default VPC CIDR |
-| ICMP | All | Default VPC CIDR |
-
----
-
-## 📍 3.2 Public EC2 Security Group (Optional)
-
-Allow SSH from aws-client if needed:
-
-| Type | Port | Source |
-|---|---|---|
-| SSH | 22 | Your IP / 0.0.0.0/0 |
-
----
-
-# 🔑 PART 4 — Setup SSH Access (aws-client → Public EC2)
-
-## On aws-client
-
-### Check key:
+### 3.4 Verify Routes
 
 ```bash
-ls /root/.ssh/id_rsa.pub
-```
+# Check routes in default VPC route table
+aws ec2 describe-route-tables --route-table-ids <default-rt-id> \
+  --query "RouteTables[0].Routes[?DestinationCidrBlock=='10.1.0.0/16']"
 
-If not exists:
-
-```bash
-ssh-keygen -t rsa -f /root/.ssh/id_rsa -N ""
-```
-
-### Copy Public Key
-```bash
-cat /root/.ssh/id_rsa.pub
-```
-
-### Add to Public EC2
-1. Connect via EC2 Instance Connect
-2. Edit:
-```bash
-nano /home/ec2-user/.ssh/authorized_keys
-```
-Paste key.
-
-Fix permissions:
-```bash
-chmod 600 ~/.ssh/authorized_keys
+# Check routes in private VPC route table
+aws ec2 describe-route-tables --route-table-ids <private-rt-id> \
+  --query "RouteTables[0].Routes[?DestinationCidrBlock=='<default-vpc-cidr>']"
 ```
 
 ---
 
-# 🔗 PART 5 — SSH into Public EC2
+## 🔒 Step 4: Configure Security Groups
 
-From aws-client:
+### 4.1 Update Private EC2 Security Group
+1. 🛡️ Go to EC2 → Security Groups
+2. 🔍 Find security group attached to xfusion-private-ec2
+3. ✅ Select the security group
+4. 📊 Click Inbound rules tab → Edit inbound rules
+5. ✅ Add rule for ICMP (ping):
+   - Type: All ICMP - IPv4
+   - Source: <default-vpc-cidr> (e.g., 172.31.0.0/16)
+   - Description: Allow ping from default VPC
+6. (Optional) Add rule for SSH if needed:
+   - Type: SSH
+   - Source: <default-vpc-cidr>
+7. ✅ Click Save rules
+
+---
+
+### 4.2 Update Public EC2 Security Group (Optional)
+
+If you need to SSH from public instance to private instance:
+1. 🔍 Find security group attached to xfusion-public-ec2
+2. 📊 Add outbound rule:
+   - Type: SSH (port 22)
+   - Destination: 10.1.0.0/16 (private VPC CIDR)
+
+---
+
+## 🔑 Step 5: Configure SSH Access from AWS Client
+
+### 5.1 Add Public Key to Public EC2 Instance
 ```bash
-ssh ec2-user@<PUBLIC-EC2-IP>
+# First, get the public IP of xfusion-public-ec2
+PUBLIC_IP=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=xfusion-public-ec2" \
+  --query "Reservations[0].Instances[0].PublicIpAddress" \
+  --output text)
+
+echo "Public EC2 IP: $PUBLIC_IP"
+
+# Copy the public key to the instance
+# Note: You need the existing key pair for the public instance
+scp -i /path/to/existing-key.pem /root/.ssh/id_rsa.pub ec2-user@$PUBLIC_IP:/tmp/
+
+# SSH into public instance
+ssh -i /path/to/existing-key.pem ec2-user@$PUBLIC_IP
+
+# Inside public EC2 instance, add the public key
+sudo mkdir -p /home/ec2-user/.ssh
+sudo cat /tmp/id_rsa.pub >> /home/ec2-user/.ssh/authorized_keys
+sudo chmod 600 /home/ec2-user/.ssh/authorized_keys
+sudo chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+
+# Verify
+cat /home/ec2-user/.ssh/authorized_keys
+exit
+```
+
+### 5.2 Test SSH from AWS Client
+
+```bash
+# Test SSH access from AWS client host
+ssh -i /root/.ssh/id_rsa ec2-user@$PUBLIC_IP
+# Should connect without password prompt
 ```
 
 ---
 
-# 🧪 PART 6 — Test Connectivity (Public → Private EC2)
-Get Private EC2 IP
+## 🧪 Step 6: Test VPC Peering Connection
 
-From AWS Console:
+### 6.1 Get Private EC2 Instance IP
+
+```bash
+# Get private IP of xfusion-private-ec2
+PRIVATE_IP=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=xfusion-private-ec2" \
+  --query "Reservations[0].Instances[0].PrivateIpAddress" \
+  --output text)
+
+echo "Private EC2 IP: $PRIVATE_IP"
+```
+
+---
+
+### 6.2 SSH into Public EC2 Instance
+
+```bash
+# SSH from AWS client to public instance
+ssh -i /root/.ssh/id_rsa ec2-user@$PUBLIC_IP
+```
+
+---
+
+### 6.3 Test Ping from Public to Private EC2
+
+```bash
+# Inside public EC2 instance, ping the private instance
+ping -c 4 $PRIVATE_IP
+
+# Expected output:
+# PING 10.1.1.x (10.1.1.x) 56(84) bytes of data.
+# 64 bytes from 10.1.1.x: icmp_seq=1 ttl=64 time=0.5 ms
+# 64 bytes from 10.1.1.x: icmp_seq=2 ttl=64 time=0.6 ms
+```
+
+---
+
+### 6.4 Test SSH from Public to Private EC2 (Optional)
+
+```bash
+# If SSH is allowed, from public instance:
+ssh -i /path/to/private-key.pem ec2-user@$PRIVATE_IP
+# OR
+ssh ubuntu@$PRIVATE_IP  # if using Ubuntu AMI
+```
+
+---
+
+## 📊 Step 7: Verification Commands
+
+### Check Peering Connection Status
+
+```bash
+# Describe peering connection
+aws ec2 describe-vpc-peering-connections \
+  --filters "Name=tag:Name,Values=xfusion-vpc-peering"
+
+# Check status
+aws ec2 describe-vpc-peering-connections \
+  --vpc-peering-connection-ids pcx-xxxxxxxx \
+  --query "VpcPeeringConnections[0].Status.Code"
+```
+
+### Check Routes=
+
+```bash
+# Default VPC route table
+aws ec2 describe-route-tables \
+  --filters "Name=vpc-id,Values=<default-vpc-id>" \
+  --query "RouteTables[0].Routes[?DestinationCidrBlock=='10.1.0.0/16']"
+
+# Private VPC route table
+aws ec2 describe-route-tables \
+  --filters "Name=vpc-id,Values=<private-vpc-id>" \
+  --query "RouteTables[0].Routes[?DestinationCidrBlock=='<default-vpc-cidr>']"
+```
+
+### Test Connectivity
+
+```bash
+# From public EC2, check route to private VPC
+ip route get $PRIVATE_IP
+
+# Check if peering is active
+ping -c 2 $PRIVATE_IP && echo "✅ Peering working!" || echo "❌ Peering failed"
+```
+
+---
+
+## ✅ Final Verification Checklist
+
+- 🔗 VPC Peering xfusion-vpc-peering created and Active
+- 🗺️ Default VPC route table has route to 10.1.0.0/16 via peering
+- 🗺️ Private VPC route table has route to default VPC CIDR via peering
+- 🛡️ Private EC2 security group allows ICMP from default VPC CIDR
+- 🔑 Public key added to xfusion-public-ec2 authorized_keys
+- 🖥️ Able to SSH from AWS client to public EC2 instance
+- 📡 From public EC2, able to ping private EC2 instance
+- ✅ Cross-VPC communication working
+
+---
+
+## Configured Successfully
+
+- 🔗 xfusion-vpc-peering - VPC peering between default and private VPCs
+- 🗺️ Route tables - Routes for cross-VPC communication
+- 🛡️ Security groups - Allow ICMP from public VPC to private EC2
+- 🔑 SSH access - From AWS client to public EC2 instance
+- 📡 Connectivity - Public EC2 can ping private EC2 instance
+
+---
+
+## 🌐 Architecture Overview
+
 ```text
-devops-private-ec2 → Private IP
-```
-
-### Ping Private EC2
-
-Inside public EC2:
-```bash
-ping <PRIVATE-IP>
-```
-
-✅ Expected Output
-```text
-64 bytes from <PRIVATE-IP>: icmp_seq=1 ttl=...
-```
-
----
-
-# 🏁 Final Architecture
-
-```text
-aws-client
-   │
-   ▼
-Public EC2 (devops-public-ec2)
-   │
-   │ VPC Peering
-   ▼
-Private EC2 (devops-private-ec2)
-```
-
----
-
-# ✔️ Verification Checklist
-
-| Requirement                | Status |
-| -------------------------- | ------ |
-| Peering created            | ✅      |
-| Peering active             | ✅      |
-| Routes updated (both VPCs) | ✅      |
-| Security groups updated    | ✅      |
-| SSH to public EC2 works    | ✅      |
-| Ping to private EC2 works  | ✅      |
-
----
-
-# 💡 Key Concepts
-VPC Peering
-- Enables private communication between VPC
-- Uses private IPs
-- Requires:
-  - Route table updates
-  - Security group rules
- 
-## Traffic Flow
-```text
-Public EC2 → Route Table → Peering → Private EC2
+[AWS Client Host]
+       ↓ (SSH)
+[Public EC2: xfusion-public-ec2]
+       ↓ (ICMP via VPC Peering)
+[Private EC2: xfusion-private-ec2]
+       ↑
+[Default VPC] ←→ [xfusion-vpc-peering] ←→ [xfusion-private-vpc]
 ```
