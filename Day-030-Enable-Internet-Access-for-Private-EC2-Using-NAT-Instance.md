@@ -301,7 +301,7 @@ Wait 1–2 minutes for cron job.
 
 Check S3 Bucket
 ```bash
-aws s3 ls s3://nautilus-nat-21059
+aws s3 ls s3://nautilus-nat-26868
 ```
 
 ## ✅ Expected Output
