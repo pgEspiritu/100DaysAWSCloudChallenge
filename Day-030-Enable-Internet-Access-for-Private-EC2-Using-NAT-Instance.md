@@ -13,7 +13,7 @@ Enable outbound internet access for a **private EC2 instance** using a **NAT Ins
 | VPC | `nautilus-priv-vpc` |
 | Private Subnet | `nautilus-priv-subnet` |
 | Private EC2 | `nautilus-priv-ec2` |
-| S3 Bucket | `nautilus-nat-21059` |
+| S3 Bucket | `nnautilus-nat-26868` |
 
 ---
 
