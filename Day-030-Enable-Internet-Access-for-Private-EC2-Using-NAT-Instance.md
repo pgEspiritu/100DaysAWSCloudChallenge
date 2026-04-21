@@ -10,20 +10,20 @@ Enable outbound internet access for a **private EC2 instance** using a **NAT Ins
 
 | Resource | Name |
 |---------|------|
-| VPC | `datacenter-priv-vpc` |
-| Private Subnet | `datacenter-priv-subnet` |
-| Private EC2 | `datacenter-priv-ec2` |
-| S3 Bucket | `datacenter-nat-21059` |
+| VPC | `nautilus-priv-vpc` |
+| Private Subnet | `nautilus-priv-subnet` |
+| Private EC2 | `nautilus-priv-ec2` |
+| S3 Bucket | `nautilus-nat-21059` |
 
 ---
 
 ## 🎯 Tasks
 
-1. Create **Public Subnet** → `datacenter-pub-subnet`
-2. Launch **NAT Instance** → `datacenter-nat-instance`
+1. Create **Public Subnet** → `nautilus-pub-subnet`
+2. Launch **NAT Instance** → `nautilus-nat-instance`
 3. Configure NAT (iptables + IP forwarding)
 4. Update **Route Tables**
-5. Verify upload to S3 (`datacenter-test.txt`)
+5. Verify upload to S3 (`nautilus-test.txt`)
 
 ---
 
@@ -38,8 +38,8 @@ VPC → Subnets → Create subnet
 
 | Setting | Value |
 |---|---|
-| VPC | datacenter-priv-vpc |
-| Subnet Name | datacenter-pub-subnet |
+| VPC | nautilus-priv-vpc |
+| Subnet Name | nautilus-pub-subnet |
 | AZ | us-east-1a |
 | CIDR | 10.0.2.0/24 *(or next available range)* |
 
@@ -69,11 +69,11 @@ Auto-assign public IPv4
 VPC → Internet Gateways → Create
 ```
 
-| Name | datacenter-igw |
+| Name | nautilus-igw |
 
 Attach to:
 ```text
-datacenter-priv-vpc
+nautilus-priv-vpc
 ```
 
 ---
@@ -92,7 +92,7 @@ datacenter-priv-vpc
 
 ### Associate with:
 ```text
-datacenter-pub-subnet
+nautilus-pub-subnet
 ```
 
 ---
@@ -108,8 +108,8 @@ EC2 → Security Groups → Create
 
 | Setting | Value |
 |---|---|
-| Name | datacenter-nat-sg |
-| VPC | datacenter-priv-vpc |
+| Name | nautilus-nat-sg |
+| VPC | nautilus-priv-vpc |
 
 ---
 
@@ -118,7 +118,7 @@ EC2 → Security Groups → Create
 | Type | Port | Source |
 |---|---|---|
 | SSH | 22 | 0.0.0.0/0 |
-| All Traffic | All | datacenter-priv-subnet CIDR |
+| All Traffic | All | nautilus-priv-subnet CIDR |
 
 ---
 
@@ -142,12 +142,12 @@ EC2 → Launch Instance
 
 | Setting | Value |
 |---|---|
-| Name | datacenter-nat-instance |
+| Name | nautilus-nat-instance |
 | AMI | Amazon Linux 2023 |
 | Instance Type | t2.micro |
-| Subnet | datacenter-pub-subnet |
+| Subnet | nautilus-pub-subnet |
 | Auto Public IP | Enabled |
-| Security Group | datacenter-nat-sg |
+| Security Group | nautilus-nat-sg |
 
 ---
 
@@ -272,7 +272,7 @@ sudo systemctl start iptables
 # ⚠️ IMPORTANT — Disable Source/Destination Check
 In AWS Console:
 ```text
-EC2 → datacenter-nat-instance
+EC2 → nautilus-nat-instance
 ```
 
 Actions:
@@ -301,12 +301,12 @@ Wait 1–2 minutes for cron job.
 
 Check S3 Bucket
 ```bash
-aws s3 ls s3://datacenter-nat-21059
+aws s3 ls s3://nautilus-nat-21059
 ```
 
 ## ✅ Expected Output
 ```text
-datacenter-test.txt
+nautilus-test.txt
 ```
 
 ✔ This confirms:
@@ -317,19 +317,19 @@ datacenter-test.txt
 # 🏁 Final Architecture
 
 ```text
-Private EC2 (datacenter-priv-ec2)
+Private EC2 (nautilus-priv-ec2)
         │
         ▼
 Private Subnet
         │
         ▼
-NAT Instance (datacenter-nat-instance)
+NAT Instance (nautilus-nat-instance)
         │
         ▼
 Internet Gateway
         │
         ▼
-S3 Bucket (datacenter-nat-21059)
+S3 Bucket (nautilus-nat-21059)
 ```
 
 ---
