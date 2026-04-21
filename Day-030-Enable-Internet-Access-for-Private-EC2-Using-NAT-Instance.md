@@ -168,6 +168,78 @@ ssh ec2-user@<NAT-PUBLIC-IP>
 
 ---
 
+Issue Found: Can't Connect, need to enable public and private keys
+
+### 🔑 STEP 1 — Generate SSH Key (on aws-client)
+```bash
+ssh-keygen -t rsa -b 2048 -f /root/.ssh/id_rsa -N ""
+```
+
+verify:
+```bash
+ls /root/.ssh/
+```
+
+expected:
+```text
+id_rsa
+id_rsa.pub
+```
+
+### 📋 STEP 2 — Copy Public Key
+```bash
+cat /root/.ssh/id_rsa.pub
+```
+👉 Copy the entire output
+
+### 🌐 STEP 3 — Access EC2 via Console (IMPORTANT)
+
+You cannot SSH yet, so:
+- Go to AWS Console
+- EC2 → Instances → select your instance
+- Click:
+```text
+Connect → EC2 Instance Connect
+```
+
+### 🔧 STEP 4 — Add Your Public Key to EC2
+
+Inside EC2 terminal:
+```bash
+mkdir -p /home/ec2-user/.ssh
+chmod 700 /home/ec2-user/.ssh
+```
+
+Now edit:
+```bash
+nano /home/ec2-user/.ssh/authorized_keys
+```
+👉 Paste your public key
+
+Save and exit.
+
+### 🔐 STEP 5 — Fix Permissions
+```bash
+chmod 600 /home/ec2-user/.ssh/authorized_keys
+chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+```
+
+### 🚀 STEP 6 — SSH Again (from aws-client)
+```bash
+ssh -i /root/.ssh/id_rsa ec2-user@54.90.157.41
+```
+
+### ✅ EXPECTED RESULT
+```bash
+[ec2-user@ip-...]$
+```
+
+🎉 You are now connected
+
+---
+
+## Resume: ⚙️ PART 6 — Configure NAT Instance
+
 ## Install iptables
 ```bash
 sudo yum install -y iptables-services
