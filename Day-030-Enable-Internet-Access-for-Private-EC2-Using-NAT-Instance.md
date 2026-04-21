@@ -304,7 +304,119 @@ Check S3 Bucket
 aws s3 ls s3://nautilus-nat-26868
 ```
 
-## ✅ Expected Output
+---
+
+## Issue: Can't Connect to S3
+
+Steps to Fix:
+
+### 🔐 STEP 1 — Create IAM Role (Console)
+
+**Go to:**
+```text
+IAM → Roles → Create Role
+```
+
+**Configure:**
+| Setting        | Value       |
+| -------------- | ----------- |
+| Trusted Entity | AWS Service |
+| Use Case       | EC2         |
+
+**Attach Policy**
+Choose:
+```text
+AmazonS3FullAccess
+```
+👉 (or at least S3 write access)
+
+Role Name:
+```text
+nautilus-ec2-role
+```
+
+Click:
+```text
+create role
+```
+
+### 🔗 STEP 2 — Attach Role to EC2 Instance
+
+Go to:
+```text
+EC2 → Instances → datacenter-priv-ec2
+```
+
+Action:
+```text
+Security → Modify IAM Role
+```
+
+Select:
+```text
+datacenter-ec2-role
+```
+
+Save.
+
+### ⏳ STEP 3 — Wait ~30 seconds
+
+IAM role propagation takes a bit.
+
+### 🧪 STEP 4 — Test Credentials
+
+Inside EC2:
+```text
+aws sts get-caller-identity
+```
+
+Expected Output:
+```json
+{
+  "Account": "...",
+  "Arn": "arn:aws:iam::...:role/datacenter-ec2-role",
+  "UserId": "..."
+}
+```
+
+---
+
+## Resume: Check S3 Bucket
+
+```bash
+aws s3 ls s3://nautilus-nat-26868
+```
+
+Output:
+**No nautilus-test.txt File**
+
+Fix by: Upload manually
+
+### 🧪 STEP 1 — Create the Test File (inside private EC2)
+
+```bash
+echo "NAT instance test successful" > nautilus-test.txt
+```
+
+### 🚀 STEP 2 — Upload to S3 Manually
+
+```bash
+aws s3 cp nautilus-test.txt s3://nautilus-nat-26868/
+```
+
+### ✅ Expected Output
+
+```text
+upload: ./nautilus-test.txt to s3://nautilus-nat-26868/nautilus-test.txt
+```
+
+### Verify Upload
+
+```bash
+aws s3 ls s3://nautilus-nat-26868
+```
+
+### ✅ Expected Output
 ```text
 nautilus-test.txt
 ```
