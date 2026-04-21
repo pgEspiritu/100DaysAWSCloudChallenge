@@ -226,7 +226,7 @@ chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 ### 🚀 STEP 6 — SSH Again (from aws-client)
 ```bash
-ssh -i /root/.ssh/id_rsa ec2-user@54.90.157.41
+ssh -i /root/.ssh/id_rsa ec2-user@54.226.240.19
 ```
 
 ### ✅ EXPECTED RESULT
