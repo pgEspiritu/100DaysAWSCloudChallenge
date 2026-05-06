@@ -44,6 +44,8 @@ Click:
 Create database
 ```
 
+![Day 31.1](images/Day-031.1.png)
+
 ---
 
 ## ⚙️ Choose Creation Method
@@ -52,6 +54,9 @@ Select:
 ```text
 Standard create (Full configuration)
 ```
+
+![Day 31.2](images/Day-031.2.png)
+![Day 31.3](images/Day-031.3.png)
 
 ---
 
@@ -71,6 +76,9 @@ Select:
 Free tier
 ```
 
+![Day 31.4](images/Day-031.4.png)
+![Day 31.5](images/Day-031.5.png)
+
 ---
 
 # 🧾 STEP 5 — DB Settings
@@ -81,6 +89,8 @@ Free tier
 | Master username | admin (default or keep provided) |
 | Password | Set secure password |
 
+![Day 31.6](images/Day-031.6.png)
+
 ---
 
 # 🖥️ STEP 6 — Instance Class
@@ -89,6 +99,8 @@ Select:
 ```text
 db.t3.micro
 ```
+
+![Day 31.7](images/Day-031.7.png)
 
 ---
 
@@ -100,6 +112,9 @@ db.t3.micro
 | VPC | Default or provided VPC |
 | Subnet group | Default |
 | Security group | default or create new |
+
+![Day 31.8](images/Day-031.8.png)
+![Day 31.9](images/Day-031.9.png)
 
 ---
 
@@ -114,6 +129,8 @@ Set:
 ```text
 Maximum threshold = 50 GB
 ```
+
+![Day 31.10](images/Day-031.10.png)
 
 Leave everything else default.
 
@@ -132,6 +149,8 @@ Click:
 Create database
 ```
 
+![Day 31.11](images/Day-031.11.png)
+
 ---
 
 # ⏳ STEP 11 — Wait for Availability
@@ -145,6 +164,8 @@ Wait until status:
 ```text
 Available
 ```
+
+![Day 31.12](images/Day-031.12.png)
 
 ---
 
