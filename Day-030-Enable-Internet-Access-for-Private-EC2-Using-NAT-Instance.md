@@ -34,6 +34,8 @@ Enable outbound internet access for a **private EC2 instance** using a **NAT Ins
 VPC → Subnets → Create subnet
 ```
 
+![Day 30.1](images/Day-030.1.png)
+
 ### Configure:
 
 | Setting | Value |
@@ -48,6 +50,9 @@ Click:
 Create subnet
 ```
 
+![Day 30.2](images/Day-030.2.png)
+![Day 30.3](images/Day-030.3.png)
+
 ---
 
 ## ✅ Enable Auto Public IP
@@ -55,10 +60,14 @@ Create subnet
 Select subnet → Actions → Edit subnet settings
 ```
 
+![Day 30.4](images/Day-030.4.png)
+
 ✔ Enable:
 ```text
 Auto-assign public IPv4
 ```
+
+![Day 30.5](images/Day-030.5.png)
 
 ---
 
@@ -69,12 +78,19 @@ Auto-assign public IPv4
 VPC → Internet Gateways → Create
 ```
 
+![Day 30.6](images/Day-030.6.png)
+
 | Name | nautilus-igw |
+
+![Day 30.7](images/Day-030.7.png
 
 Attach to:
 ```text
 nautilus-priv-vpc
 ```
+
+![Day 30.8](images/Day-030.8.png)
+![Day 30.9](images/Day-030.9.png)
 
 ---
 
@@ -95,6 +111,12 @@ nautilus-priv-vpc
 nautilus-pub-subnet
 ```
 
+![Day 30.10](images/Day-030.10.png)
+![Day 30.11](images/Day-030.11.png)
+![Day 30.12](images/Day-030.12.png)
+![Day 30.13](images/Day-030.13.png)
+![Day 30.14](images/Day-030.14.png)
+
 ---
 
 # 🔐 PART 4 — Create NAT Security Group
@@ -110,6 +132,7 @@ EC2 → Security Groups → Create
 |---|---|
 | Name | nautilus-nat-sg |
 | VPC | nautilus-priv-vpc |
+
 
 ---
 
@@ -127,6 +150,10 @@ EC2 → Security Groups → Create
 Allow All (default)
 ```
 
+![Day 30.15](images/Day-030.15.png)
+![Day 30.16](images/Day-030.16.png)
+![Day 30.17](images/Day-030.17.png)
+
 ---
 
 # 🖥️ PART 5 — Launch NAT Instance
@@ -135,6 +162,8 @@ Allow All (default)
 ```text
 EC2 → Launch Instance
 ```
+
+![Day 30.18](images/Day-030.18.png)
 
 ---
 
@@ -156,6 +185,10 @@ Click:
 Launch Instance
 ```
 
+![Day 30.19](images/Day-030.19.png)
+![Day 30.20](images/Day-030.20.png)
+![Day 30.21](images/Day-030.21.png)
+
 ---
 
 # ⚙️ PART 6 — Configure NAT Instance
@@ -166,6 +199,7 @@ Launch Instance
 ssh ec2-user@<NAT-PUBLIC-IP>
 ```
 
+![Day 30.22](images/Day-030.22.png)
 ---
 
 Issue Found: Can't Connect, need to enable public and private keys
@@ -192,6 +226,8 @@ cat /root/.ssh/id_rsa.pub
 ```
 👉 Copy the entire output
 
+![Day 30.23](images/Day-030.23.png)
+
 ### 🌐 STEP 3 — Access EC2 via Console (IMPORTANT)
 
 You cannot SSH yet, so:
@@ -201,6 +237,9 @@ You cannot SSH yet, so:
 ```text
 Connect → EC2 Instance Connect
 ```
+
+![Day 30.24](images/Day-030.24.png)
+![Day 30.25](images/Day-030.25.png)
 
 ### 🔧 STEP 4 — Add Your Public Key to EC2
 
@@ -218,11 +257,16 @@ nano /home/ec2-user/.ssh/authorized_keys
 
 Save and exit.
 
+![Day 30.26](images/Day-030.26.png)
+![Day 30.27](images/Day-030.27.png)
+
 ### 🔐 STEP 5 — Fix Permissions
 ```bash
 chmod 600 /home/ec2-user/.ssh/authorized_keys
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 ```
+
+![Day 30.28](images/Day-030.28.png)
 
 ### 🚀 STEP 6 — SSH Again (from aws-client)
 ```bash
@@ -267,6 +311,10 @@ sudo systemctl enable iptables
 sudo systemctl start iptables
 ```
 
+![Day 30.29](images/Day-030.29.png)
+![Day 30.30](images/Day-030.30.png)
+![Day 30.31](images/Day-030.31.png)
+
 ---
 
 # ⚠️ IMPORTANT — Disable Source/Destination Check
@@ -280,6 +328,9 @@ Actions:
 Networking → Change source/destination check → Disable
 ```
 
+![Day 30.32](images/Day-030.32.png)
+![Day 30.33](images/Day-030.33.png)
+
 ---
 
 # 🛣️ PART 7 — Update Private Route Table
@@ -288,10 +339,14 @@ Navigate:
 VPC → Route Tables → Private subnet route table
 ```
 
+![Day 30.34](images/Day-030.34.png)
+
 Add Route:
 | Destination | Target       |
 | ----------- | ------------ |
 | 0.0.0.0/0   | NAT Instance |
+
+![Day 30.35](images/Day-030.35.png)
 
 ---
 
@@ -303,6 +358,8 @@ Check S3 Bucket
 ```bash
 aws s3 ls s3://nautilus-nat-26868
 ```
+
+![Day 30.36](images/Day-030.36.png)
 
 ---
 
@@ -317,11 +374,15 @@ Steps to Fix:
 IAM → Roles → Create Role
 ```
 
+![Day 30.37](images/Day-030.37.png)
+
 **Configure:**
 | Setting        | Value       |
 | -------------- | ----------- |
 | Trusted Entity | AWS Service |
 | Use Case       | EC2         |
+
+![Day 30.38](images/Day-030.38.png)
 
 **Attach Policy**
 Choose:
@@ -330,15 +391,21 @@ AmazonS3FullAccess
 ```
 👉 (or at least S3 write access)
 
+![Day 30.39](images/Day-030.39.png)
+
 Role Name:
 ```text
 nautilus-ec2-role
 ```
 
+![Day 30.40](images/Day-030.40.png)
+
 Click:
 ```text
 create role
 ```
+
+![Day 30.41](images/Day-030.41.png)
 
 ### 🔗 STEP 2 — Attach Role to EC2 Instance
 
@@ -359,6 +426,9 @@ datacenter-ec2-role
 
 Save.
 
+![Day 30.42](images/Day-030.42.png)
+![Day 30.43](images/Day-030.43.png)
+
 ### ⏳ STEP 3 — Wait ~30 seconds
 
 IAM role propagation takes a bit.
@@ -378,6 +448,8 @@ Expected Output:
   "UserId": "..."
 }
 ```
+
+![Day 30.44](images/Day-030.44.png)
 
 ---
 
@@ -423,6 +495,8 @@ nautilus-test.txt
 
 ✔ This confirms:
 - Private EC2 → NAT Instance → Internet → S3 ✅
+
+![Day 30.45](images/Day-030.45.png)
 
 ---
 
